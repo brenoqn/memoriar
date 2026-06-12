@@ -1,0 +1,31 @@
+<aside class="aside" role="navigation" aria-label="Menu admin">
+  <div class="brand">
+    <div class="mark" aria-hidden="true"></div>
+    <div>
+      <div class="name">Memoriar</div>
+      <div class="tag">Administração</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a
+      class="item"
+      routerLink="/admin"
+      routerLinkActive="item--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Visão geral
+    </a>
+    <a class="item" routerLink="/admin/cemeteries" routerLinkActive="item--active">Cemitérios</a>
+    <a class="item" routerLink="/admin/structure" routerLinkActive="item--active">Setores e quadras</a>
+    <a class="item" routerLink="/admin/burial-locations" routerLinkActive="item--active">Locais físicos</a>
+    <a class="item" routerLink="/admin/burial-cases" routerLinkActive="item--active">Casos de sepultamento</a>
+    <a class="item" routerLink="/admin/remains-movements" routerLinkActive="item--active">Movimentações</a>
+    <a class="item" routerLink="/admin/operation-flow" routerLinkActive="item--active">Fluxo guiado</a>
+    <a class="item" routerLink="/admin/data-quality" routerLinkActive="item--active">Qualidade dos dados</a>
+  </nav>
+
+  <div class="footer">
+    <button class="btn" type="button" (click)="logout()">Sair</button>
+  </div>
+</aside>

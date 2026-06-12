@@ -1,0 +1,35 @@
+.list {
+  display: grid;
+  gap: 8px;
+  overflow: auto;
+}
+
+.row {
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.row:hover {
+  background: color-mix(in oklab, var(--bg) 92%, black);
+}
+
+.row:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.row--active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 16%, transparent);
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 14px;
+}
+

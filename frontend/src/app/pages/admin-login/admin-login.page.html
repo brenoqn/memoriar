@@ -1,0 +1,35 @@
+<form class="form" (ngSubmit)="submit()" aria-label="Entrar" [attr.aria-busy]="busy()">
+  <div class="field">
+    <label for="email">E-mail</label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="username"
+      [formControl]="form.controls.email"
+      [attr.aria-invalid]="form.controls.email.invalid && form.controls.email.touched"
+    />
+  </div>
+
+  <div class="field">
+    <label for="password">Senha</label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      [formControl]="form.controls.password"
+      [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched"
+    />
+  </div>
+
+  <div class="msg" [attr.role]="error() ? 'alert' : 'status'" aria-live="polite">
+    @if (error()) {
+      <div class="error">{{ error() }}</div>
+    } @else {
+      <div class="muted">Use suas credenciais administrativas.</div>
+    }
+  </div>
+
+  <button class="btn" type="submit" [disabled]="busy()">
+    @if (busy()) { Entrando… } @else { Entrar }
+  </button>
+</form>

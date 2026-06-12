@@ -1,0 +1,53 @@
+<section class="wrap" aria-label="Qualidade dos dados">
+  <header class="head">
+    <h1 class="title">Qualidade dos dados</h1>
+    <p class="subtitle">
+      Alertas operacionais para revisão. O objetivo é evitar perda de informação e inconsistências de localização.
+    </p>
+  </header>
+
+  <div class="status" role="status" aria-live="polite">
+    @if (loading()) {
+      <span class="muted">Carregando…</span>
+    } @else if (error()) {
+      <span class="error">{{ error() }}</span>
+    }
+  </div>
+
+  @if (data()) {
+    <div class="summary" aria-label="Resumo">
+      <div class="pill">Total: {{ data()!.summary.issues_total }}</div>
+      <div class="pill pill--critical">Crítico: {{ data()!.summary.critical }}</div>
+      <div class="pill pill--warning">Atenção: {{ data()!.summary.warning }}</div>
+      <div class="pill pill--info">Informativo: {{ data()!.summary.info }}</div>
+    </div>
+
+    <div class="panel" aria-label="Alertas">
+      <table class="table" aria-label="Tabela de alertas">
+        <thead>
+          <tr>
+            <th>Severidade</th>
+            <th>Alerta</th>
+            <th>Descrição</th>
+            <th>Entidade</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (i of data()!.issues; track i.id) {
+            <tr>
+              <td>
+                <span class="sev" [class.sev--critical]="i.severity==='critical'" [class.sev--warning]="i.severity==='warning'" [class.sev--info]="i.severity==='info'">
+                  {{ i.severity }}
+                </span>
+              </td>
+              <td class="strong">{{ i.title }}</td>
+              <td>{{ i.description }}</td>
+              <td class="muted">{{ i.entity_kind }} · {{ i.entity_id }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+

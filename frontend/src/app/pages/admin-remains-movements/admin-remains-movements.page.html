@@ -1,0 +1,91 @@
+<section class="wrap" aria-label="Movimentações">
+  <header class="head">
+    <h1 class="title">Movimentações</h1>
+    <p class="subtitle">
+      Histórico apend-only de movimentações de restos mortais (sepultamento, exumação, transferência, remanejamento).
+    </p>
+  </header>
+
+  <div class="grid" aria-label="Lista e detalhe">
+    <div class="panel" aria-label="Lista de movimentações">
+      <div class="status" role="status" aria-live="polite">
+        @if (loading()) {
+          <span class="muted">Carregando…</span>
+        } @else if (error()) {
+          <span class="error">{{ error() }}</span>
+        }
+      </div>
+
+      <table class="table" aria-label="Tabela de movimentações">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Caso</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Data</th>
+            <th>Confirmada</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (m of movements(); track m.id) {
+            <tr [class.row--active]="m.id === selectedId()">
+              <td>
+                <button type="button" class="link" (click)="select(m.id)">{{ m.movement_type }}</button>
+              </td>
+              <td>{{ m.deceased_name }}</td>
+              <td>{{ m.from_location_code || '-' }}</td>
+              <td>{{ m.to_location_code || '-' }}</td>
+              <td>{{ m.occurred_on || '-' }}</td>
+              <td>{{ m.is_confirmed ? 'sim' : 'não' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" aria-label="Detalhe da movimentação">
+      @if (selected()) {
+        <h2 class="h2">Detalhe</h2>
+        <div class="kv">
+          <div class="k">ID</div>
+          <div class="v">{{ selected()!.id }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Tipo</div>
+          <div class="v">{{ selected()!.movement_type }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Caso</div>
+          <div class="v">{{ selected()!.deceased_name }} ({{ selected()!.burial_case_id }})</div>
+        </div>
+        <div class="kv">
+          <div class="k">Origem</div>
+          <div class="v">{{ selected()!.from_location_code || '—' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Destino</div>
+          <div class="v">{{ selected()!.to_location_code || '—' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Data</div>
+          <div class="v">{{ selected()!.occurred_on || 'não informada' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Confirmação</div>
+          <div class="v">{{ selected()!.is_confirmed ? 'confirmada' : 'pendente' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Observação</div>
+          <div class="v muted">{{ selected()!.notes || 'Sem observação.' }}</div>
+        </div>
+        <div class="note" role="note">
+          Editor em modo demonstrativo (mocks): em fase futura, esta tela permitirá registrar novas movimentações.
+        </div>
+      } @else {
+        <div class="muted" role="status" aria-live="polite">Selecione uma movimentação para ver o detalhe.</div>
+      }
+    </div>
+  </div>
+</section>
+

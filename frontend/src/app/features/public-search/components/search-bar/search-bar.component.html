@@ -1,0 +1,26 @@
+<form class="wrap" [formGroup]="form" (ngSubmit)="submit()" aria-label="Busca">
+  <label class="label" for="q">Busca</label>
+  <div class="row">
+    <input
+      id="q"
+      type="text"
+      inputmode="search"
+      autocomplete="off"
+      placeholder="Digite nome, referência pública ou código do local"
+      [formControl]="form.controls.q"
+      [disabled]="busy"
+      [attr.aria-invalid]="form.controls.q.invalid && (form.controls.q.touched || submitted())"
+      aria-describedby="qhelp"
+    />
+    <button class="btn" type="submit" [disabled]="busy">
+      @if (busy) { Buscando… } @else { Buscar }
+    </button>
+  </div>
+  <div id="qhelp" class="help" aria-live="polite">
+    @if (form.controls.q.invalid && (form.controls.q.touched || submitted())) {
+      <span class="error">Digite pelo menos 2 caracteres.</span>
+    } @else {
+      <span class="muted">A busca pública mostra apenas registros publicados.</span>
+    }
+  </div>
+</form>

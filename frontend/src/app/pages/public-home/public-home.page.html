@@ -1,0 +1,55 @@
+<header class="hero" aria-label="Apresentação">
+  <h1 class="hero__title">Memoriar</h1>
+  <p class="hero__subtitle">
+    Encontre a localização de sepultamentos de forma simples e respeitosa.
+  </p>
+  <div class="hero__search">
+    <mem-search-bar
+      [busy]="loading()"
+      (searchRequested)="onSearch($event)"
+    />
+  </div>
+</header>
+
+<section class="grid" aria-label="Busca e mapa">
+  <div class="panel" aria-label="Resultados e orientação">
+    <div class="status" role="status" aria-live="polite">
+      @if (!hasSearched()) {
+        <div class="muted">
+          Comece digitando um nome, uma referência pública (ex.: MEM-0001) ou um código do local.
+        </div>
+      } @else if (loading()) {
+        <div class="muted">Buscando…</div>
+      } @else if (error()) {
+        <div class="error">{{ error() }}</div>
+      } @else if (items().length === 0) {
+        <div class="muted">
+          Nenhum registro encontrado. Verifique a grafia ou tente uma referência/código diferente.
+        </div>
+      }
+    </div>
+
+    <mem-result-list
+      [items]="items()"
+      [selectedId]="selectedId()"
+      (selected)="onSelect($event)"
+    />
+  </div>
+
+  <div class="map" aria-label="Mapa lógico">
+    <mem-map-canvas
+      [nodes]="mapNodes()"
+      [highlightedNodeId]="highlightedMapNodeId()"
+      [active]="hasSearched() && !!cemeteryId()"
+      [loading]="mapLoading()"
+      [error]="mapError()"
+      (nodeSelected)="onMapNodeSelected($event)"
+    />
+  </div>
+
+  <mem-burial-case-detail-drawer
+    [open]="!!detail()"
+    [detail]="detail()"
+    (closed)="onCloseDrawer()"
+  />
+</section>

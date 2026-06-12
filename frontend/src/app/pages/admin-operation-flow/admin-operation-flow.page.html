@@ -1,0 +1,363 @@
+<section class="wrap" aria-label="Fluxo guiado">
+  <header class="head">
+    <h1 class="title">Fluxo guiado</h1>
+    <p class="subtitle">
+      Demonstração operacional: local físico → caso de sepultamento → movimentação histórica. O histórico não é sobrescrito.
+    </p>
+  </header>
+
+  <nav class="stepper" role="tablist" aria-label="Etapas">
+    @for (s of steps; track s.id) {
+      <button
+        type="button"
+        class="step"
+        role="tab"
+        [class.step--active]="s.id === step()"
+        [attr.aria-selected]="s.id === step()"
+        (click)="goTo(s.id)"
+      >
+        <span class="step__n" aria-hidden="true">{{ s.id }}</span>
+        <span class="step__label">{{ s.label }}</span>
+      </button>
+    }
+  </nav>
+
+  @if (step() === 1) {
+    <div class="panel" aria-label="Etapa 1 — Local físico">
+      <h2 class="h2">Etapa 1 — Local físico</h2>
+      <p class="muted">
+        O local físico representa a estrutura do cemitério (jazigo/gaveta/nicho/ossuário). Ele pode ser vinculado ao mapa lógico.
+      </p>
+
+      <div class="row">
+        <label class="radio">
+          <input type="radio" name="mode" [value]="'existing'" [formControl]="locationForm.controls.mode" />
+          Selecionar local existente
+        </label>
+        <label class="radio">
+          <input type="radio" name="mode" [value]="'new'" [formControl]="locationForm.controls.mode" />
+          Simular criação de novo local
+        </label>
+        <label class="radio">
+          <input type="radio" name="mode" [value]="'not_confirmed'" [formControl]="locationForm.controls.mode" />
+          Ainda sem localização confirmada
+        </label>
+      </div>
+
+      @if (locationForm.controls.mode.value === 'existing') {
+        <div class="grid2">
+          <div class="field">
+            <label class="label" for="existingLoc">Local físico</label>
+            <select id="existingLoc" class="control" [formControl]="locationForm.controls.existing_location_id">
+              @for (l of locations(); track l.id) {
+                <option [value]="l.id">{{ l.code }} — {{ l.type_label }} · Setor {{ l.sector_code }} · {{ l.cemetery_name }}</option>
+              }
+            </select>
+          </div>
+          <div class="field">
+            <div class="label">Prévia</div>
+            <div class="muted">
+              @if (selectedExistingLocation()) {
+                {{ selectedExistingLocation()!.code }} · {{ selectedExistingLocation()!.type_label }}
+                · Quadra {{ selectedExistingLocation()!.quadra_code || '-' }}
+                · Nó {{ selectedExistingLocation()!.map_node_id || '—' }}
+              } @else {
+                Selecione um local para ver o resumo.
+              }
+            </div>
+          </div>
+        </div>
+      }
+
+      @if (locationForm.controls.mode.value === 'new') {
+        <div class="grid2">
+          <div class="field">
+            <label class="label" for="newCode">Código</label>
+            <input id="newCode" class="control" type="text" [formControl]="locationForm.controls.new_code" />
+            <div class="help muted">Ex.: Q2-JZ-07, Q5-NC-18.</div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="newType">Tipo</label>
+            <select id="newType" class="control" [formControl]="locationForm.controls.new_type_code">
+              <option value="JZ">Jazigo</option>
+              <option value="GV">Gaveta</option>
+              <option value="NC">Nicho</option>
+              <option value="OS">Ossuário</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label class="label" for="newMapNode">Nó do mapa lógico (opcional)</label>
+            <input id="newMapNode" class="control" type="text" [formControl]="locationForm.controls.new_map_node_id" />
+          </div>
+
+          <div class="field">
+            <label class="label" for="newText">Texto de localização (opcional)</label>
+            <textarea id="newText" class="control" rows="4" [formControl]="locationForm.controls.new_location_text"></textarea>
+          </div>
+        </div>
+      }
+
+      @if (locationForm.controls.mode.value === 'not_confirmed') {
+        <div class="note" role="note">
+          Você poderá registrar o caso como “localização não confirmada”. O objetivo é não inventar uma localização precisa.
+        </div>
+      }
+    </div>
+  }
+
+  @if (step() === 2) {
+    <div class="panel" aria-label="Etapa 2 — Caso de sepultamento">
+      <h2 class="h2">Etapa 2 — Caso de sepultamento</h2>
+      <p class="muted">
+        O caso representa o registro do falecido e seu status de publicação/revisão. Ele pode ser vinculado a um local, sem apagar histórico.
+      </p>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="label" for="deceasedName">Nome do falecido</label>
+          <input id="deceasedName" class="control" type="text" [formControl]="caseForm.controls.deceased_name" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="publicRef">Referência pública (opcional)</label>
+          <input id="publicRef" class="control" type="text" [formControl]="caseForm.controls.public_reference" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="status">Status inicial</label>
+          <select id="status" class="control" [formControl]="caseForm.controls.status">
+            @for (s of statusOptions; track s.value) {
+              <option [value]="s.value">{{ s.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="label" for="approx">Localização aproximada (se aplicável)</label>
+          <textarea id="approx" class="control" rows="3" [formControl]="caseForm.controls.approx_location_text"></textarea>
+          <div class="help muted">
+            Obrigatório quando o status for “Localização não confirmada” (ou inclua uma observação).
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="notes">Observações (opcional)</label>
+          <textarea id="notes" class="control" rows="3" [formControl]="caseForm.controls.notes"></textarea>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (step() === 3) {
+    <div class="panel" aria-label="Etapa 3 — Movimentação histórica">
+      <h2 class="h2">Etapa 3 — Movimentações (histórico)</h2>
+      <p class="muted">
+        Movimentações são eventos no tempo e sempre entram no histórico. O sistema não deve sobrescrever o passado.
+      </p>
+
+      <div class="grid2">
+        <div class="field">
+          <label class="label" for="movType">Tipo</label>
+          <select id="movType" class="control" [formControl]="movementForm.controls.movement_type">
+            @for (m of movementOptions; track m.value) {
+              <option [value]="m.value">{{ m.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="label" for="movDate">Data</label>
+          <input id="movDate" class="control" type="date" [formControl]="movementForm.controls.occurred_on" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="from">Origem (quando aplicável)</label>
+          <input id="from" class="control" type="text" [formControl]="movementForm.controls.from_location_code" />
+        </div>
+
+        <div class="field">
+          <label class="label" for="to">Destino (quando aplicável)</label>
+          <input id="to" class="control" type="text" [formControl]="movementForm.controls.to_location_code" />
+        </div>
+
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" [formControl]="movementForm.controls.is_confirmed" />
+            Movimentação confirmada
+          </label>
+        </div>
+
+        <div class="field">
+          <label class="label" for="mnotes">Observações (opcional)</label>
+          <textarea id="mnotes" class="control" rows="3" [formControl]="movementForm.controls.notes"></textarea>
+        </div>
+      </div>
+
+      <div class="actionsRow" aria-label="Ações da movimentação">
+        <button
+          type="button"
+          class="btn btn--primary"
+          (click)="addOrUpdateMovement()"
+          [disabled]="!canAddOrUpdateMovement()"
+        >
+          @if (editingMovementId()) { Salvar ajuste local } @else { Adicionar movimentação ao histórico }
+        </button>
+        <span class="muted" aria-live="polite">{{ uiFeedback() || '' }}</span>
+      </div>
+
+      <div class="timeline" aria-label="Linha do tempo do histórico demonstrativo">
+        <h3 class="h3">Linha do tempo</h3>
+        @if (movements().length === 0) {
+          <div class="muted" role="status" aria-live="polite">Nenhuma movimentação adicionada.</div>
+        } @else {
+          <ol class="timelineList">
+            @for (m of movements(); track m.local_id) {
+              <li class="timelineItem">
+                <div class="timelineHead">
+                  <div class="timelineTitle">
+                    <span class="strong">{{ m.movement_type }}</span> · <span>{{ m.occurred_on }}</span>
+                    @if (m.adjusted) { <span class="badge">ajuste local</span> }
+                  </div>
+                  <div class="timelineActions">
+                    <button type="button" class="linkBtn" (click)="editMovement(m.local_id)">Editar</button>
+                    <button type="button" class="linkBtn" (click)="removeMovement(m.local_id)">Remover</button>
+                  </div>
+                </div>
+                <div class="muted">
+                  Origem: {{ m.from_location_code || '—' }} · Destino: {{ m.to_location_code || '—' }} ·
+                  {{ m.is_confirmed ? 'confirmada' : 'pendente' }}
+                </div>
+                @if (m.notes) { <div class="muted">{{ m.notes }}</div> }
+              </li>
+            }
+          </ol>
+          <div class="note" role="note">
+            Localização atual inferida (pela última movimentação confirmada):
+            <span class="strong">{{ inferredCurrentLocationFromLocalHistory() || '—' }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (step() === 4) {
+    <div class="panel" aria-label="Resumo">
+      <h2 class="h2">Resumo</h2>
+
+      <div class="status" role="status" aria-live="polite">
+        @if (busy()) {
+          <span class="muted">Gerando prévia…</span>
+        } @else if (previewMessage()) {
+          <span class="muted">{{ previewMessage() }}</span>
+        }
+      </div>
+
+      @if (previewErrors().length) {
+        <div class="errorBox" role="alert" aria-label="Erros de validação">
+          <div class="errorTitle">Verifique os pontos abaixo:</div>
+          <ul>
+            @for (e of previewErrors(); track e.code + (e.field || '')) {
+              <li>{{ e.message }}</li>
+            }
+          </ul>
+        </div>
+      }
+
+      @if (preview()) {
+        <div class="summary">
+          <div class="block">
+            <div class="k">Local físico</div>
+            <div class="v">
+              @if (preview()!.location_summary.mode === 'not_confirmed') {
+                Localização não confirmada
+              } @else {
+                {{ preview()!.location_summary.location_code || '—' }}
+                <span class="muted">
+                  · Setor {{ preview()!.location_summary.sector_code || '-' }}
+                  · Quadra {{ preview()!.location_summary.quadra_code || '-' }}
+                  · Nó {{ preview()!.location_summary.map_node_id || '—' }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="k">Caso</div>
+            <div class="v">
+              {{ preview()!.burial_case_summary.deceased_name }}
+              <div class="muted">
+                Referência: {{ preview()!.burial_case_summary.public_reference || '—' }} · Status:
+                {{ preview()!.burial_case_summary.status }}
+              </div>
+              @if (preview()!.burial_case_summary.approx_location_text) {
+                <div class="muted">{{ preview()!.burial_case_summary.approx_location_text }}</div>
+              }
+            </div>
+          </div>
+
+          <div class="block">
+            <div class="k">Histórico de movimentações (linha do tempo)</div>
+            <div class="v">
+              <div class="muted">
+                Localização atual inferida (última confirmada):
+                <span class="strong">{{ preview()!.current_location_inferred.location_code || '—' }}</span>
+                @if (preview()!.current_location_inferred.as_of_occurred_on) {
+                  <span class="muted">· em {{ preview()!.current_location_inferred.as_of_occurred_on }}</span>
+                }
+              </div>
+              <ol class="timelineList timelineList--summary">
+                @for (t of preview()!.timeline; track t.order_index + t.occurred_on + t.movement_type) {
+                  <li class="timelineItem" [class.timelineItem--current]="t.is_current_location_inferred">
+                    <div class="timelineTitle">
+                      <span class="strong">{{ t.movement_type }}</span> · <span>{{ t.occurred_on }}</span>
+                      @if (t.is_current_location_inferred) { <span class="badge">localização atual inferida</span> }
+                    </div>
+                    <div class="muted">
+                      Origem: {{ t.from_location_code || '—' }} · Destino: {{ t.to_location_code || '—' }} ·
+                      {{ t.is_confirmed ? 'confirmada' : 'pendente' }}
+                    </div>
+                    @if (t.notes) { <div class="muted">{{ t.notes }}</div> }
+                  </li>
+                }
+              </ol>
+            </div>
+          </div>
+
+          <div class="note" role="note">
+            Histórico demonstrativo — em produção estes eventos seriam gravados como registros apend-only. Nenhuma informação foi salva em banco.
+          </div>
+
+          @if (preview()!.warnings.length) {
+            <div class="note" role="note" aria-label="Observações">
+              @for (w of preview()!.warnings; track w) {
+                <div>{{ w }}</div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <footer class="actions" aria-label="Ações">
+    <button type="button" class="btn" (click)="back()" [disabled]="step() === 1 || busy()">Voltar</button>
+    @if (step() < 4) {
+      <button type="button" class="btn btn--primary" (click)="next()" [disabled]="!canNext() || busy()">
+        Avançar
+      </button>
+    } @else {
+      <button type="button" class="btn" (click)="generatePreview()" [disabled]="busy()">Gerar prévia</button>
+      <button type="button" class="btn btn--primary" (click)="finish()" [disabled]="busy() || finished()">
+        Finalizar demonstração
+      </button>
+    }
+  </footer>
+
+  @if (finished()) {
+    <div class="done" role="status" aria-live="polite">
+      Demonstração finalizada. Você pode repetir o fluxo para simular outro registro.
+    </div>
+  }
+</section>

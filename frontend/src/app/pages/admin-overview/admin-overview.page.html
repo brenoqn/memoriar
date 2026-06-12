@@ -1,0 +1,46 @@
+<section class="wrap" aria-label="Visão geral administrativa">
+  <header class="head">
+    <h1 class="title">Painel administrativo</h1>
+    <p class="subtitle">
+      Gerencie a estrutura do cemitério, os registros de sepultamento e o histórico de movimentações.
+    </p>
+  </header>
+
+  <div class="status" role="status" aria-live="polite">
+    @if (loading()) {
+      <span class="muted">Carregando resumo…</span>
+    } @else if (error()) {
+      <span class="error">{{ error() }}</span>
+    }
+  </div>
+
+  @if (overview()) {
+    <div class="cards" role="list" aria-label="Resumo">
+      <div class="card" role="listitem">
+        <div class="k">Cemitérios</div>
+        <div class="v">{{ overview()!.cemeteries_count }}</div>
+      </div>
+      <div class="card" role="listitem">
+        <div class="k">Locais físicos</div>
+        <div class="v">{{ overview()!.burial_locations_count }}</div>
+      </div>
+      <div class="card" role="listitem">
+        <div class="k">Casos publicados</div>
+        <div class="v">{{ overview()!.burial_cases_published_count }}</div>
+      </div>
+      <div class="card" role="listitem">
+        <div class="k">Casos em revisão</div>
+        <div class="v">{{ overview()!.burial_cases_in_review_count }}</div>
+      </div>
+      <div class="card" role="listitem">
+        <div class="k">Localização não confirmada</div>
+        <div class="v">{{ overview()!.burial_cases_not_found_precisely_count }}</div>
+      </div>
+    </div>
+  }
+
+  <div class="note" role="note" aria-label="Aviso">
+    Este painel está em modo demonstrativo (mocks) para representar o fluxo operacional do Memoriar.
+  </div>
+</section>
+

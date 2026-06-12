@@ -1,0 +1,95 @@
+<section class="wrap" aria-label="Casos de sepultamento">
+  <header class="head">
+    <h1 class="title">Casos de sepultamento</h1>
+    <p class="subtitle">
+      Registro do falecido e situação do caso (publicado, em revisão, localização não confirmada). A localização atual vem das movimentações.
+    </p>
+  </header>
+
+  <div class="grid" aria-label="Lista e detalhe">
+    <div class="panel" aria-label="Lista de casos">
+      <div class="status" role="status" aria-live="polite">
+        @if (loading()) {
+          <span class="muted">Carregando…</span>
+        } @else if (error()) {
+          <span class="error">{{ error() }}</span>
+        }
+      </div>
+
+      <table class="table" aria-label="Tabela de casos">
+        <thead>
+          <tr>
+            <th>Falecido</th>
+            <th>Referência</th>
+            <th>Status</th>
+            <th>Local atual</th>
+            <th>Atualizado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of cases(); track c.burial_case_id) {
+            <tr [class.row--active]="c.burial_case_id === selectedId()">
+              <td>
+                <button type="button" class="link" (click)="select(c.burial_case_id)">
+                  {{ c.deceased_name }}
+                </button>
+              </td>
+              <td>{{ c.public_reference || '-' }}</td>
+              <td>{{ c.status }}</td>
+              <td>
+                @if (c.location_code) {
+                  {{ c.location_code }}
+                } @else if (c.status === 'not_found_precisely') {
+                  <span class="muted">não confirmada</span>
+                } @else {
+                  <span class="muted">-</span>
+                }
+              </td>
+              <td class="muted">{{ c.updated_at }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" aria-label="Detalhe do caso">
+      @if (selected()) {
+        <h2 class="h2">Detalhe</h2>
+        <div class="kv">
+          <div class="k">ID</div>
+          <div class="v">{{ selected()!.burial_case_id }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Falecido</div>
+          <div class="v">{{ selected()!.deceased_name }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Referência</div>
+          <div class="v">{{ selected()!.public_reference || 'Sem referência pública' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Status</div>
+          <div class="v">{{ selected()!.status }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Local atual</div>
+          <div class="v">
+            @if (selected()!.location_code) {
+              {{ selected()!.location_code }}
+              @if (selected()!.location_label) { <span class="muted">— {{ selected()!.location_label }}</span> }
+              <div class="muted">Setor {{ selected()!.sector_code || '-' }}, Quadra {{ selected()!.quadra_code || '-' }}</div>
+            } @else {
+              <span class="muted">Sem local atual confirmado.</span>
+            }
+          </div>
+        </div>
+        <div class="note" role="note">
+          Editor em modo demonstrativo (mocks): em fase futura, este painel permitirá publicar/despublicar e registrar movimentações.
+        </div>
+      } @else {
+        <div class="muted" role="status" aria-live="polite">Selecione um caso para ver o detalhe.</div>
+      }
+    </div>
+  </div>
+</section>
+

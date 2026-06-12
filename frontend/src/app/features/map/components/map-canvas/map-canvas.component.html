@@ -1,0 +1,38 @@
+<div class="wrap" role="region" aria-label="Mapa lógico do cemitério">
+  <div class="canvas" role="presentation">
+    @for (n of vmNodes; track n.id) {
+      <button
+        type="button"
+        class="node"
+        [class.node--highlight]="n.id === highlightedNodeId"
+        [style.left.px]="n.left"
+        [style.top.px]="n.top"
+        [style.width.px]="n.width"
+        [style.height.px]="n.height"
+        [attr.aria-label]="n.label"
+        [attr.aria-pressed]="n.id === highlightedNodeId"
+        (click)="nodeSelected.emit(n.id)"
+      >
+        <span class="node__label">{{ n.label }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="caption" aria-live="polite">
+    @if (!active) {
+      <span class="muted">O mapa será exibido após a busca.</span>
+    } @else if (loading) {
+      <span class="muted">Carregando mapa…</span>
+    } @else if (error) {
+      <span class="error">{{ error }}</span>
+    } @else if (!vmNodes.length) {
+      <span class="muted">Mapa lógico indisponível neste momento.</span>
+    } @else {
+      <div class="legend">
+        <span class="legend__chip" aria-hidden="true"></span>
+        <span class="muted">Mapa ilustrativo — referência interna do cemitério (não é GPS).</span>
+      </div>
+      <div class="muted">Você pode navegar pelos pontos com Tab e selecionar com Enter.</div>
+    }
+  </div>
+</div>

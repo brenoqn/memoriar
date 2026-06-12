@@ -1,0 +1,25 @@
+# Dependências / build (Node/TS/Angular)
+**/node_modules/
+**/dist/
+**/.angular/cache/
+**/.vite/
+**/.turbo/
+**/.next/
+**/.cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env / segredos
+**/.env
+**/.env.*
+!**/.env.example
+
+# SO / IDE
+.DS_Store
+Thumbs.db
+

@@ -1,0 +1,14 @@
+@if (entityId) {
+  <div class="panel" role="region" aria-label="Editor do item">
+    <div class="row">
+      <div class="label">ID</div>
+      <div class="value">{{ entityId }}</div>
+    </div>
+    <div class="hint">
+      Este painel será conectado aos cadastros administrativos do domínio (cemitérios, locais, casos e movimentações).
+    </div>
+  </div>
+} @else {
+  <div class="empty" role="status" aria-live="polite">Selecione um item para editar.</div>
+}
+

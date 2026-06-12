@@ -1,0 +1,83 @@
+@if (open && detail) {
+  <div class="backdrop" (click)="close()" aria-hidden="true"></div>
+  <aside class="drawer" role="dialog" aria-label="Detalhe do sepultamento" aria-modal="true">
+    <div class="head">
+      <div class="title">{{ detail.deceased_name }}</div>
+      <button class="icon" type="button" (click)="close()">Fechar</button>
+    </div>
+
+    <div class="body">
+      <div class="block" aria-label="Identificação">
+        <div class="label">Identificação</div>
+        <div class="value">{{ detail.deceased_name }}</div>
+        @if (detail.public_reference) {
+          <div class="sub muted">Referência pública: {{ detail.public_reference }}</div>
+        }
+        <div class="actions">
+          <button type="button" class="btn" (click)="copyReferenceOrLink()">
+            @if (detail.public_reference) { Copiar referência } @else { Copiar link }
+          </button>
+          <span class="sr" aria-live="polite">{{ copyFeedback() || '' }}</span>
+        </div>
+      </div>
+
+      <div class="block" aria-label="Localização">
+        <div class="label">Localização</div>
+        @if (detail.location_code) {
+          <div class="value">
+            {{ detail.location_code }}
+            @if (detail.location_label) { <span class="muted">— {{ detail.location_label }}</span> }
+          </div>
+        } @else if (detail.status === 'not_found_precisely') {
+          <div class="value">Localização não confirmada</div>
+          @if (detail.approx_location_text) {
+            <div class="sub muted">{{ detail.approx_location_text }}</div>
+          } @else {
+            <div class="sub muted">Registro em revisão: ainda não há confirmação da quadra e do local exato.</div>
+          }
+        } @else if (detail.approx_location_text) {
+          <div class="value">{{ detail.approx_location_text }}</div>
+        } @else {
+          <div class="value muted">Localização não disponível.</div>
+        }
+
+        <div class="sub muted">{{ detail.cemetery_name }}</div>
+        @if (detail.sector_code || detail.sector_name) {
+          <div class="sub muted">
+            Setor {{ detail.sector_code || '-' }}{{ detail.sector_name ? ' — ' + detail.sector_name : '' }}
+          </div>
+        }
+        @if (detail.quadra_code || detail.quadra_name) {
+          <div class="sub muted">
+            Quadra {{ detail.quadra_code || '-' }}{{ detail.quadra_name ? ' — ' + detail.quadra_name : '' }}
+          </div>
+        }
+      </div>
+
+      <div class="block" aria-label="Orientação dentro do cemitério">
+        <div class="label">Orientação</div>
+        @if (detail.location_text) {
+          <div class="value">{{ detail.location_text }}</div>
+        } @else {
+          <div class="value muted">Orientação não informada.</div>
+        }
+        <div class="sub muted">Mapa ilustrativo — referência interna do cemitério.</div>
+      </div>
+
+      <div class="block" aria-label="Status">
+        <div class="label">Status</div>
+        <div class="value">{{ statusLabel(detail) }}</div>
+      </div>
+
+      <div class="block" aria-label="Último movimento">
+        <div class="label">Último registro</div>
+        @if (detail.last_movement_type) {
+          <div class="value">{{ detail.last_movement_type }}</div>
+          <div class="sub muted">{{ detail.last_occurred_on || 'data não informada' }}</div>
+        } @else {
+          <div class="value muted">Sem movimentações confirmadas.</div>
+        }
+      </div>
+    </div>
+  </aside>
+}

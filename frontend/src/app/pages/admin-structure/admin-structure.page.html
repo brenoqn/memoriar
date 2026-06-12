@@ -1,0 +1,117 @@
+<section class="wrap" aria-label="Setores e quadras">
+  <header class="head">
+    <h1 class="title">Setores e quadras</h1>
+    <p class="subtitle">Estrutura interna do cemitério usada para localização e organização operacional.</p>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Seções">
+    <button
+      type="button"
+      class="tab"
+      role="tab"
+      [attr.aria-selected]="tab() === 'sectors'"
+      [class.tab--active]="tab() === 'sectors'"
+      (click)="setTab('sectors')"
+    >
+      Setores
+    </button>
+    <button
+      type="button"
+      class="tab"
+      role="tab"
+      [attr.aria-selected]="tab() === 'quadras'"
+      [class.tab--active]="tab() === 'quadras'"
+      (click)="setTab('quadras')"
+    >
+      Quadras
+    </button>
+  </div>
+
+  <div class="grid" aria-label="Lista e detalhe">
+    <div class="panel" aria-label="Lista">
+      <div class="status" role="status" aria-live="polite">
+        @if (loading()) {
+          <span class="muted">Carregando…</span>
+        } @else if (error()) {
+          <span class="error">{{ error() }}</span>
+        }
+      </div>
+
+      @if (tab() === 'sectors') {
+        <table class="table" aria-label="Tabela de setores">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>Cemitério</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (s of sectors(); track s.id) {
+              <tr [class.row--active]="s.id === selectedId()">
+                <td>
+                  <button type="button" class="link" (click)="select(s.id)">{{ s.code }}</button>
+                </td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.cemetery_name }}</td>
+                <td>{{ s.status }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <table class="table" aria-label="Tabela de quadras">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>Setor</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (q of quadras(); track q.id) {
+              <tr [class.row--active]="q.id === selectedId()">
+                <td>
+                  <button type="button" class="link" (click)="select(q.id)">{{ q.code }}</button>
+                </td>
+                <td>{{ q.name || '-' }}</td>
+                <td>{{ q.sector_code }}</td>
+                <td>{{ q.status }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <div class="panel" aria-label="Detalhe">
+      @if (selected()) {
+        <h2 class="h2">Detalhe</h2>
+        <div class="kv">
+          <div class="k">ID</div>
+          <div class="v">{{ selected()!.id }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Código</div>
+          <div class="v">{{ selected()!.code }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Nome</div>
+          <div class="v">{{ selected()!.name || '-' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Status</div>
+          <div class="v">{{ selected()!.status }}</div>
+        </div>
+        <div class="note" role="note">
+          Editor em modo demonstrativo (mocks): os relacionamentos e validações serão aplicados na integração real.
+        </div>
+      } @else {
+        <div class="muted" role="status" aria-live="polite">Selecione um item para ver o detalhe.</div>
+      }
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,17 @@
+<div class="list" role="list" aria-label="Entidades">
+  @for (item of items; track item.id) {
+    <button
+      type="button"
+      class="row"
+      role="listitem"
+      [class.row--active]="item.id === selectedId"
+      (click)="selected.emit(item.id)"
+    >
+      {{ labelOf(item) }}
+    </button>
+  }
+  @if (!items.length) {
+    <div class="empty" role="status" aria-live="polite">Nenhum item encontrado.</div>
+  }
+</div>
+

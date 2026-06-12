@@ -1,0 +1,52 @@
+<div class="list" role="list" aria-label="Resultados">
+  @for (item of items; track trackById($index, item)) {
+    <button
+      type="button"
+      class="card"
+      role="listitem"
+      [class.card--active]="item.burial_case_id === selectedId"
+      [attr.aria-current]="item.burial_case_id === selectedId ? 'true' : null"
+      [attr.aria-label]="cardAriaLabel(item)"
+      (click)="selected.emit(item.burial_case_id)"
+    >
+      <div class="row row--top">
+        <div class="name">{{ item.deceased_name }}</div>
+        @if (item.public_reference) {
+          <div class="badge" aria-label="Referência pública">{{ item.public_reference }}</div>
+        }
+      </div>
+
+      <div class="meta">
+        <span>{{ item.cemetery_name }}</span>
+        @if (item.sector_code || item.sector_name) {
+          <span>• Setor {{ item.sector_code || '-' }}</span>
+        }
+        @if (item.quadra_code || item.quadra_name) {
+          <span>• Quadra {{ item.quadra_code || '-' }}</span>
+        }
+      </div>
+
+      <div class="meta">
+        @if (item.location_code) {
+          <span>{{ item.location_code }}</span>
+          @if (item.location_label) { <span class="muted">— {{ item.location_label }}</span> }
+        } @else if (item.approx_location_text) {
+          <span>Localização em revisão</span>
+        } @else {
+          <span>Localização não informada</span>
+        }
+      </div>
+
+      <div class="meta">
+        @if (formatDate(item.birth_date)) { <span>Nasc.: {{ formatDate(item.birth_date) }}</span> }
+        @if (formatDate(item.death_date)) { <span>• Falec.: {{ formatDate(item.death_date) }}</span> }
+      </div>
+    </button>
+  }
+
+  @if (items.length > 0) {
+    <div class="hint" aria-live="polite">
+      Use a lista para selecionar um registro e ver o destaque no mapa.
+    </div>
+  }
+</div>

@@ -1,0 +1,73 @@
+<section class="wrap" aria-label="Cemitérios">
+  <header class="head">
+    <h1 class="title">Cemitérios</h1>
+    <p class="subtitle">Cadastro institucional do cemitério e status de publicação.</p>
+  </header>
+
+  <div class="grid" aria-label="Lista e detalhe">
+    <div class="panel" aria-label="Lista de cemitérios">
+      <div class="status" role="status" aria-live="polite">
+        @if (loading()) {
+          <span class="muted">Carregando…</span>
+        } @else if (error()) {
+          <span class="error">{{ error() }}</span>
+        }
+      </div>
+
+      <table class="table" aria-label="Tabela de cemitérios">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Endereço</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of cemeteries(); track c.id) {
+            <tr [class.row--active]="c.id === selectedId()">
+              <td>
+                <button type="button" class="link" (click)="select(c.id)">
+                  {{ c.name }}
+                </button>
+              </td>
+              <td>{{ c.address || '-' }}</td>
+              <td>{{ c.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" aria-label="Detalhe do cemitério">
+      @if (selected()) {
+        <h2 class="h2">Detalhe</h2>
+        <div class="kv">
+          <div class="k">ID</div>
+          <div class="v">{{ selected()!.id }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Nome</div>
+          <div class="v">{{ selected()!.name }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Endereço</div>
+          <div class="v">{{ selected()!.address || '-' }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Status</div>
+          <div class="v">{{ selected()!.status }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Mapa lógico</div>
+          <div class="v muted">{{ selected()!.logical_map_note || 'Sem nota cadastrada.' }}</div>
+        </div>
+        <div class="note" role="note">
+          Editor em modo demonstrativo (mocks): a edição/salvamento será implementada em fase futura.
+        </div>
+      } @else {
+        <div class="muted" role="status" aria-live="polite">Selecione um cemitério para ver o detalhe.</div>
+      }
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,88 @@
+<section class="wrap" aria-label="Locais físicos">
+  <header class="head">
+    <h1 class="title">Locais físicos</h1>
+    <p class="subtitle">
+      Cadastro de jazigos, gavetas, nichos e ossuários. Um local físico pode ser vinculado ao mapa lógico.
+    </p>
+  </header>
+
+  <div class="grid" aria-label="Lista e detalhe">
+    <div class="panel" aria-label="Lista de locais físicos">
+      <div class="status" role="status" aria-live="polite">
+        @if (loading()) {
+          <span class="muted">Carregando…</span>
+        } @else if (error()) {
+          <span class="error">{{ error() }}</span>
+        }
+      </div>
+
+      <table class="table" aria-label="Tabela de locais físicos">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Tipo</th>
+            <th>Setor</th>
+            <th>Quadra</th>
+            <th>Capacidade</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (l of locations(); track l.id) {
+            <tr [class.row--active]="l.id === selectedId()">
+              <td>
+                <button type="button" class="link" (click)="select(l.id)">{{ l.code }}</button>
+              </td>
+              <td>{{ l.type_label }}</td>
+              <td>{{ l.sector_code }}</td>
+              <td>{{ l.quadra_code || '-' }}</td>
+              <td>{{ l.default_capacity }}</td>
+              <td>{{ l.status }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="panel" aria-label="Detalhe do local físico">
+      @if (selected()) {
+        <h2 class="h2">Detalhe</h2>
+        <div class="kv">
+          <div class="k">ID</div>
+          <div class="v">{{ selected()!.id }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Código</div>
+          <div class="v">{{ selected()!.code }}</div>
+        </div>
+        <div class="kv">
+          <div class="k">Tipo</div>
+          <div class="v">{{ selected()!.type_label }} ({{ selected()!.type_code }})</div>
+        </div>
+        <div class="kv">
+          <div class="k">Hierarquia</div>
+          <div class="v">
+            {{ selected()!.cemetery_name }} · Setor {{ selected()!.sector_code }}
+            @if (selected()!.quadra_code) { · Quadra {{ selected()!.quadra_code }} }
+          </div>
+        </div>
+        <div class="kv">
+          <div class="k">Mapa lógico</div>
+          <div class="v">
+            @if (selected()!.map_node_id) { Nó {{ selected()!.map_node_id }} } @else { <span class="muted">Sem nó vinculado</span> }
+          </div>
+        </div>
+        <div class="kv">
+          <div class="k">Orientação</div>
+          <div class="v muted">{{ selected()!.location_text || 'Sem orientação cadastrada.' }}</div>
+        </div>
+        <div class="note" role="note">
+          Editor em modo demonstrativo (mocks): este painel exibirá validações de ocupação e consistência em fase futura.
+        </div>
+      } @else {
+        <div class="muted" role="status" aria-live="polite">Selecione um local para ver o detalhe.</div>
+      }
+    </div>
+  </div>
+</section>
+
