@@ -1,0 +1,12 @@
+<div class="prompt" *ngIf="theme.shouldAskUser()" role="dialog" aria-label="Escolher tema">
+  <div class="text">
+    <div class="title">Tema</div>
+    <div class="desc">Você prefere o modo claro ou escuro?</div>
+  </div>
+
+  <div class="actions" role="group" aria-label="Opções de tema">
+    <button class="btn" type="button" (click)="set('light')">Claro</button>
+    <button class="btn btn--primary" type="button" (click)="set('dark')">Escuro</button>
+  </div>
+</div>
+

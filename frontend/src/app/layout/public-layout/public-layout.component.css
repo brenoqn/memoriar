@@ -17,6 +17,12 @@
   gap: 16px;
 }
 
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -57,6 +63,39 @@
   text-decoration: underline;
 }
 
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 650;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.theme-toggle:hover {
+  background: color-mix(in oklab, var(--bg) 88%, white);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.theme-toggle__icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--accent) 40%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, var(--border));
+}
+
+.theme-toggle__text {
+  font-size: 13px;
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -71,4 +110,3 @@
   left: 16px;
   top: 16px;
 }
-

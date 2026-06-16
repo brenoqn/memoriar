@@ -9,11 +9,21 @@
         <div class="brand__tag">Localização de sepultamentos</div>
       </div>
     </div>
-    <a class="link" routerLink="/admin/login">Acessar admin</a>
+    <div class="topbar__actions">
+      <button
+        class="theme-toggle"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.aria-label]="'Alternar tema. Atual: ' + (theme.mode() === 'dark' ? 'escuro' : 'claro')"
+      >
+        <span class="theme-toggle__icon" aria-hidden="true"></span>
+        <span class="theme-toggle__text">Tema</span>
+      </button>
+      <a class="link" routerLink="/admin/login">Acessar admin</a>
+    </div>
   </div>
 </header>
 
 <main id="main" class="main" role="main">
   <router-outlet />
 </main>
-

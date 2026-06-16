@@ -26,6 +26,14 @@
   </nav>
 
   <div class="footer">
+    <button
+      class="btn btn--secondary"
+      type="button"
+      (click)="toggleTheme()"
+      [attr.aria-label]="'Alternar tema. Atual: ' + (theme.mode() === 'dark' ? 'escuro' : 'claro')"
+    >
+      Alternar tema
+    </button>
     <button class="btn" type="button" (click)="logout()">Sair</button>
   </div>
 </aside>

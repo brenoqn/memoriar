@@ -1,4 +1,5 @@
 :root {
+  /* Tema claro (default) */
   color-scheme: light;
   --bg: #ffffff;
   --surface: #fbfbfc;
@@ -8,6 +9,19 @@
   --accent: #1d4ed8;
   --danger: #b91c1c;
   --focus: #f59e0b;
+}
+
+html[data-theme='dark'] {
+  /* Tema escuro */
+  color-scheme: dark;
+  --bg: #0b0f14;
+  --surface: #101826;
+  --text: #e8eef6;
+  --muted: #a8b3c7;
+  --border: rgba(232, 238, 246, 0.14);
+  --accent: #4f8cff;
+  --danger: #ff5a7a;
+  --focus: #ffcc66;
 }
 
 html,

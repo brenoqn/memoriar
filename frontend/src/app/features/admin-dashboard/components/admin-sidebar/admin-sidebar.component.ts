@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { AdminAuthService } from '../../../../core/services/admin-auth.service';
+import { ThemeService } from '../../../../core/services/theme.service';
 
 @Component({
   selector: 'mem-admin-sidebar',
@@ -10,6 +11,8 @@ import { AdminAuthService } from '../../../../core/services/admin-auth.service';
   styleUrl: './admin-sidebar.component.css'
 })
 export class AdminSidebarComponent {
+  readonly theme = inject(ThemeService);
+
   constructor(
     private readonly auth: AdminAuthService,
     private readonly router: Router
@@ -18,5 +21,9 @@ export class AdminSidebarComponent {
   logout() {
     this.auth.logout();
     this.router.navigateByUrl('/admin/login');
+  }
+
+  toggleTheme() {
+    this.theme.toggle();
   }
 }

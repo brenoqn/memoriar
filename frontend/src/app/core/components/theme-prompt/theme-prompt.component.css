@@ -1,0 +1,70 @@
+.prompt {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 50;
+  max-width: 720px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: color-mix(in oklab, var(--surface) 88%, var(--bg));
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
+}
+
+.title {
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.desc {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 650;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  border-color: color-mix(in oklab, var(--accent) 60%, var(--border));
+  background: color-mix(in oklab, var(--accent) 14%, var(--bg));
+}
+
+@media (max-width: 520px) {
+  .prompt {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .actions {
+    justify-content: stretch;
+  }
+  .btn {
+    width: 100%;
+  }
+}
+

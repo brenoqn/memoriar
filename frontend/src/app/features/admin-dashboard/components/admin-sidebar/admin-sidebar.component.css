@@ -67,6 +67,15 @@
   background: var(--bg);
 }
 
+.btn--secondary {
+  background: color-mix(in oklab, var(--surface) 75%, var(--bg));
+}
+
+.footer {
+  display: grid;
+  gap: 10px;
+}
+
 .btn:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
@@ -83,4 +92,3 @@
     overflow: auto;
   }
 }
-

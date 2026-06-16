@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'mem-public-layout',
@@ -7,5 +9,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.css'
 })
-export class PublicLayoutComponent {}
+export class PublicLayoutComponent {
+  readonly theme = inject(ThemeService);
 
+  toggleTheme() {
+    this.theme.toggle();
+  }
+}
