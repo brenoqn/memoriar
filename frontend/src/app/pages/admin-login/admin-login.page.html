@@ -1,11 +1,11 @@
-<form class="form" (ngSubmit)="submit()" aria-label="Entrar" [attr.aria-busy]="busy()">
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()" aria-label="Entrar" [attr.aria-busy]="busy()">
   <div class="field">
     <label for="email">E-mail</label>
     <input
       id="email"
       type="email"
       autocomplete="username"
-      [formControl]="form.controls.email"
+      formControlName="email"
       [attr.aria-invalid]="form.controls.email.invalid && form.controls.email.touched"
     />
   </div>
@@ -16,7 +16,7 @@
       id="password"
       type="password"
       autocomplete="current-password"
-      [formControl]="form.controls.password"
+      formControlName="password"
       [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched"
     />
   </div>

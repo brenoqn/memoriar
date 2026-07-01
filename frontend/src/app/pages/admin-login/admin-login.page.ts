@@ -30,7 +30,7 @@ export class AdminLoginPageComponent {
     private readonly router: Router
   ) {}
 
-  submit() {
+  onSubmit() {
     if (this.busy()) return;
     this.error.set(null);
     if (this.form.invalid) {
