@@ -1,0 +1,45 @@
+services:
+  memoriar-web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "127.0.0.1:18083:80"
+    depends_on:
+      memoriar-api:
+        condition: service_healthy
+    networks:
+      - local-access
+      - memoriar
+
+  memoriar-api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      PORT: "3001"
+      FRONTEND_ORIGIN: "http://localhost:18083"
+      USE_MOCKS: "true"
+    expose:
+      - "3001"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://127.0.0.1:3001/health",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+    networks:
+      - memoriar
+
+networks:
+  local-access:
+  memoriar:
+    internal: true

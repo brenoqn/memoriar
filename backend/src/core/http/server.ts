@@ -3,7 +3,7 @@ import { createApp } from './app.js';
 
 export function createServer() {
   const app = createApp();
-  app.listen(env.PORT, () => {
-    process.stdout.write(`memoriar-backend listening on :${env.PORT}\n`);
+  app.listen(env.PORT, '0.0.0.0', () => {
+    process.stdout.write(`memoriar-backend listening on 0.0.0.0:${env.PORT}\n`);
   });
 }

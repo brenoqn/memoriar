@@ -1,0 +1,46 @@
+services:
+  memoriar-web:
+    image: ghcr.io/brenoqn/memoriar-web:latest
+    container_name: bqtech-memoriar-web
+    restart: unless-stopped
+    depends_on:
+      memoriar-api:
+        condition: service_healthy
+    networks:
+      - bqtech-proxy
+      - memoriar
+
+  memoriar-api:
+    image: ghcr.io/brenoqn/memoriar-api:latest
+    container_name: bqtech-memoriar-api
+    restart: unless-stopped
+    environment:
+      PORT: "3001"
+      FRONTEND_ORIGIN: "${FRONTEND_ORIGIN:?FRONTEND_ORIGIN is required}"
+      USE_MOCKS: "false"
+      SUPABASE_URL: "${SUPABASE_URL:?SUPABASE_URL is required}"
+      SUPABASE_ANON_KEY: "${SUPABASE_ANON_KEY:?SUPABASE_ANON_KEY is required}"
+    expose:
+      - "3001"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://127.0.0.1:3001/health",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - memoriar
+
+networks:
+  bqtech-proxy:
+    external: true
+  memoriar:
+    internal: true
