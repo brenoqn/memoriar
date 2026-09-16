@@ -65,8 +65,13 @@ Acesse `http://localhost:18083`. Somente o Nginx é publicado em `127.0.0.1`; a 
 docker compose down
 ```
 
-## Produção BQTECH (preparada, não implantada)
+## Produção BQTECH
 
 `compose.production.yaml` referencia `ghcr.io/brenoqn/memoriar-web:latest` e `ghcr.io/brenoqn/memoriar-api:latest`. O Nginx do frontend participa de `bqtech-proxy` e da rede interna `memoriar`; a API participa somente de `memoriar` e não publica porta no host.
 
-Antes de usar o template, forneça em runtime `FRONTEND_ORIGIN`, `SUPABASE_URL` e `SUPABASE_ANON_KEY`. Em produção, `FRONTEND_ORIGIN` deve ser `https://memoriar.bqtech.com.br` e `USE_MOCKS` permanece `false`. Caddy, Cloudflare Tunnel e systemd ficam fora deste repositório nesta etapa.
+Forneça em runtime `FRONTEND_ORIGIN`, `SUPABASE_URL` e `SUPABASE_ANON_KEY`. Em produção,
+`FRONTEND_ORIGIN` deve ser `https://memoriar.bqtech.com.br` e `USE_MOCKS` permanece `false`.
+Caddy, Cloudflare Tunnel, secrets e automação systemd ficam fora deste repositório.
+
+O contrato de implantação, a política de cache e a pendência conhecida de egress para o Supabase
+estão em [docs/BQTECH-DEPLOYMENT.md](docs/BQTECH-DEPLOYMENT.md).
