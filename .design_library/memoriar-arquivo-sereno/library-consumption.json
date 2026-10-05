@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "tokenSource": "css.json",
+  "runtimeTokenSource": "colors_and_type.css",
+  "componentIndex": "components/index.json",
+  "recommendedReadOrder": [
+    "SKILL.md",
+    "README.md",
+    "css.json",
+    "colors_and_type.css",
+    "preview/component-button.html",
+    "components/button.json",
+    "preview/component-input.html",
+    "components/input.json",
+    "preview/component-card.html",
+    "components/card.json",
+    "preview/component-table.html",
+    "components/table.json",
+    "preview/component-topnav.html",
+    "components/topnav.json",
+    "preview/component-sidebar.html",
+    "components/sidebar.json",
+    "components.css"
+  ],
+  "coreComponents": [
+    "button",
+    "input",
+    "card",
+    "table",
+    "topnav",
+    "sidebar"
+  ],
+  "supportComponents": []
+}

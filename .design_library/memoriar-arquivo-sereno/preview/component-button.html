@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Button</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>body{margin:0;padding:var(--space-3);background:var(--color-background);font:var(--type-body);color:var(--color-on-surface);} .specimen{display:flex;flex-direction:column;gap:var(--space-2);} .header{display:none;} .stage{display:flex;flex-direction:column;gap:var(--space-2);} .story{display:grid;grid-template-columns:92px minmax(0,1fr);gap:var(--space-2);align-items:center;} .rail{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center;min-width:0;} .story-label{font:var(--type-caption);color:var(--color-on-surface-variant);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;} .divider{margin:0;border:0;border-top:1px solid var(--color-outline-variant);}
+/* @component-css-start */
+.btn{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--size-button-height-md);padding:0 var(--space-4);border:1px solid transparent;background:transparent;color:var(--color-on-surface);font:var(--type-body);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+.btn:focus-visible{outline:2px solid currentColor;outline-offset:2px;}
+.btn:disabled{cursor:not-allowed;}
+.btn.primary{height:var(--size-button-height-md);background:var(--color-primary);color:var(--color-on-primary);}
+.btn.primary:hover{background:var(--color-primary-hover);}
+.btn.primary:disabled{background:var(--color-surface-container-high);color:var(--color-on-surface-variant);}
+.btn.secondary{height:var(--size-button-height-md);background:var(--color-secondary-container);color:var(--color-on-secondary-container);border-color:var(--color-border);}
+.btn.secondary:hover{background:var(--color-surface-container);border-color:var(--color-outline);}
+.btn.secondary:disabled{background:var(--color-surface-container-low);color:var(--color-on-surface-variant);border-color:var(--color-outline-variant);}
+.btn.ghost{height:var(--size-button-height-sm);min-width:var(--size-button-height-sm);padding:0 var(--space-3);color:var(--link);}
+.btn.ghost:hover{background:var(--color-surface-container-low);}
+.btn.ghost:disabled{color:var(--color-on-surface-variant);}
+/* @component-css-end */</style>
+</head>
+<body>
+<div class="specimen">
+<div class="stage">
+<div class="story" data-evidence-sample="primary-md"><div class="story-label">ações centrais</div><div class="rail"><button class="btn primary">Buscar falecido</button><button class="btn primary" disabled>Buscar falecido</button><button class="btn secondary">Ver localização</button><button class="btn secondary" disabled>Ver localização</button></div></div>
+<hr class="divider">
+<div class="story" data-evidence-sample="ghost-sm"><div class="story-label">apoio rápido</div><div class="rail"><button class="btn ghost">Fechar</button><button class="btn ghost" disabled>Fechar</button></div></div>
+</div>
+</div>
+</body>
+</html>

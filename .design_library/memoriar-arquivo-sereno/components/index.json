@@ -1,0 +1,86 @@
+{
+  "productType": "civic memorial dashboard",
+  "kitType": "dashboard",
+  "components": [
+    {
+      "slug": "button",
+      "name": "Button",
+      "category": "actions",
+      "variantCount": 3,
+      "keyInsight": "Actions should feel calm and decisive, using emphasis without urgency or aggression."
+    },
+    {
+      "slug": "input",
+      "name": "Input",
+      "category": "forms",
+      "variantCount": 3,
+      "keyInsight": "Inputs should reduce emotional friction with generous clarity, quiet borders, and stable focus states."
+    },
+    {
+      "slug": "card",
+      "name": "Card",
+      "category": "surfaces",
+      "variantCount": 3,
+      "keyInsight": "Cards should behave like quiet information plaques: calm, readable, and lightly framed."
+    },
+    {
+      "slug": "table",
+      "name": "Table",
+      "category": "data-display",
+      "variantCount": 2,
+      "keyInsight": "Tables should feel orderly and civic, with readable density and zero visual hostility."
+    },
+    {
+      "slug": "topnav",
+      "name": "TopNav",
+      "category": "navigation",
+      "variantCount": 2,
+      "keyInsight": "Top navigation should feel editorial and public-service oriented, not corporate or promotional."
+    },
+    {
+      "slug": "sidebar",
+      "name": "Sidebar",
+      "category": "navigation",
+      "variantCount": 2,
+      "keyInsight": "The sidebar should frame operations with serenity and structure, never with heavy contrast blocks."
+    },
+    {
+      "slug": "badge",
+      "name": "Badge",
+      "category": "status",
+      "variantCount": 4,
+      "keyInsight": "Badges devem sinalizar contexto e qualidade com delicadeza, nunca com saturação punitiva."
+    },
+    {
+      "slug": "drawer",
+      "name": "Drawer",
+      "category": "overlays",
+      "variantCount": 2,
+      "keyInsight": "O drawer deve concentrar leitura detalhada com acolhimento e foco, sem parecer painel técnico agressivo."
+    },
+    {
+      "slug": "modal",
+      "name": "Modal",
+      "category": "overlays",
+      "variantCount": 2,
+      "keyInsight": "O modal deve resolver decisões importantes com sobriedade institucional e texto muito claro."
+    },
+    {
+      "slug": "logical-map",
+      "name": "LogicalMap",
+      "category": "data-viz",
+      "variantCount": 2,
+      "keyInsight": "O mapa lógico deve orientar sem dramatizar, funcionando como navegação espacial clara e silenciosa."
+    }
+  ],
+  "crossComponentPatterns": [
+    "Use superfícies claras e minerais com hierarquia editorial calma.",
+    "A ênfase principal vem do azul-petróleo cívico, apoiado por sálvia e neutros quentes.",
+    "A área pública respira mais, enquanto a administrativa comprime a densidade sem perder legibilidade.",
+    "Bordas suaves e sombras discretas substituem contrastes dramáticos ou caixas pesadas.",
+    "Estados, overlays e orientação espacial devem informar com dignidade, nunca com agressividade cromática."
+  ],
+  "warnings": [
+    "Os componentes foram inferidos a partir do briefing textual do produto e servem como base inicial para expansão posterior do sistema."
+  ]
+}

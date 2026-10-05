@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "slug": "logical-map",
+  "name": "LogicalMap",
+  "category": "data-viz",
+  "sourceKind": "from-scratch",
+  "confidence": "medium",
+  "evidence": "AI-inferred from the cemetery logical map requirement, emphasizing wayfinding, hierarchy of sectors/quadras, and highlighted selected location.",
+  "keyInsightSeed": "O mapa lógico deve orientar sem dramatizar, funcionando como navegação espacial clara e silenciosa.",
+  "semanticTypeCandidates": [
+    "logical-map",
+    "diagram-map",
+    "wayfinding-map"
+  ],
+  "anatomy": [
+    "map-shell",
+    "map-toolbar",
+    "cemetery-grid",
+    "sector-node",
+    "selected-node",
+    "legend"
+  ],
+  "variantDimensions": [
+    {
+      "name": "context",
+      "values": [
+        "public-wayfinding",
+        "admin-structure"
+      ]
+    },
+    {
+      "name": "state",
+      "values": [
+        "default",
+        "selected"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "public-wayfinding",
+      "title": "Cemitério Memorial Norte",
+      "context": "public-wayfinding",
+      "state": "selected"
+    },
+    {
+      "id": "admin-structure",
+      "title": "Estrutura territorial",
+      "context": "admin-structure",
+      "state": "default"
+    }
+  ],
+  "uiCopySamples": [
+    "Mapa lógico",
+    "Setor A",
+    "Quadra B",
+    "Localização confirmada"
+  ]
+}

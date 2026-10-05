@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Badge</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body{margin:0;padding:12px;background:var(--color-surface);font-family:var(--font-body);font-size:var(--font-size-body);font-weight:var(--font-weight-body);color:var(--color-on-surface);box-sizing:border-box;}
+*,*::before,*::after{box-sizing:inherit;}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap;}
+.label{font-size:var(--font-size-caption);color:var(--color-muted-foreground);min-width:80px;max-width:100px;font-weight:var(--font-weight-caption);text-transform:uppercase;letter-spacing:.5px;flex-shrink:0;}
+.divider{border:none;border-top:1px solid var(--color-border);margin:4px 0 10px;}
+.rail{display:flex;gap:var(--space-2);align-items:center;flex-wrap:wrap;min-width:0;}
+.badge{display:inline-flex;align-items:center;gap:var(--space-2);min-height:28px;padding:0 var(--space-3);border:1px solid transparent;border-radius:var(--radius-md);box-shadow:var(--shadow-1);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);letter-spacing:.01em;white-space:nowrap;flex-shrink:0;}
+.tone-dot{width:8px;height:8px;border-radius:var(--radius-full);flex-shrink:0;}
+.badge.soft{background:var(--color-surface-container-low);border-color:var(--color-outline-variant);color:var(--color-on-surface);}
+.badge.outlined{background:var(--color-surface);border-color:var(--color-outline);color:var(--color-on-surface);}
+.badge.info-soft .tone-dot{background:var(--color-info);}
+.badge.success-soft{background:var(--color-surface-container);}.badge.success-soft .tone-dot{background:var(--color-success);}
+.badge.warning-soft{background:var(--color-surface-container-high);}.badge.warning-soft .tone-dot{background:var(--color-warning);}
+.badge.error-outlined{border-color:var(--color-error);}.badge.error-outlined .tone-dot{background:var(--color-error);}
+</style>
+</head>
+<body>
+<div class="row">
+<span class="label">Arquivo</span>
+<div class="rail">
+<span class="badge soft info-soft"><span class="tone-dot" aria-hidden="true"></span><span>Publicado</span></span>
+<span class="badge soft success-soft"><span class="tone-dot" aria-hidden="true"></span><span>Localizado</span></span>
+</div>
+</div>
+<hr class="divider">
+<div class="row">
+<span class="label">Curadoria</span>
+<div class="rail">
+<span class="badge soft warning-soft"><span class="tone-dot" aria-hidden="true"></span><span>Em revisão</span></span>
+<span class="badge outlined error-outlined"><span class="tone-dot" aria-hidden="true"></span><span>Pendência crítica</span></span>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "slug": "button",
+  "name": "Button",
+  "category": "actions",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from the Memoriar civic memorial platform brief, prioritizing respectful guidance, clear calls to action, and operational calm.",
+  "keyInsightSeed": "Actions should feel calm and decisive, using emphasis without urgency or aggression.",
+  "semanticTypeCandidates": [
+    "button",
+    "action-trigger",
+    "cta"
+  ],
+  "anatomy": [
+    "container",
+    "label",
+    "leading-icon",
+    "focus-ring"
+  ],
+  "variantDimensions": [
+    {
+      "name": "style",
+      "values": [
+        "primary",
+        "secondary",
+        "ghost"
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ]
+    },
+    {
+      "name": "state",
+      "values": [
+        "default",
+        "hover",
+        "disabled"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "primary-md",
+      "label": "Buscar falecido",
+      "style": "primary",
+      "size": "md",
+      "state": "default"
+    },
+    {
+      "id": "secondary-md",
+      "label": "Ver localização",
+      "style": "secondary",
+      "size": "md",
+      "state": "default"
+    },
+    {
+      "id": "ghost-sm",
+      "label": "Fechar",
+      "style": "ghost",
+      "size": "sm",
+      "state": "default"
+    }
+  ],
+  "uiCopySamples": [
+    "Buscar falecido",
+    "Ver localização",
+    "Aplicar filtros"
+  ]
+}

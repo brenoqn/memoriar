@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "slug": "card",
+  "name": "Card",
+  "category": "surfaces",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from the need to balance public warmth with administrative organization across result summaries, metrics, and contextual panels.",
+  "keyInsightSeed": "Cards should behave like quiet information plaques: calm, readable, and lightly framed.",
+  "semanticTypeCandidates": [
+    "card",
+    "summary-panel",
+    "context-panel"
+  ],
+  "anatomy": [
+    "eyebrow",
+    "title",
+    "supporting-text",
+    "value",
+    "meta-row",
+    "actions"
+  ],
+  "variantDimensions": [
+    {
+      "name": "type",
+      "values": [
+        "result",
+        "metric",
+        "status"
+      ]
+    },
+    {
+      "name": "density",
+      "values": [
+        "comfortable",
+        "compact"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "result-card",
+      "title": "Maria de Lourdes Souza",
+      "value": "Quadra B • Setor 3",
+      "type": "result",
+      "density": "comfortable"
+    },
+    {
+      "id": "metric-card",
+      "title": "Casos publicados",
+      "value": "1.248",
+      "type": "metric",
+      "density": "compact"
+    },
+    {
+      "id": "status-card",
+      "title": "Qualidade dos dados",
+      "value": "18 pendências",
+      "type": "status",
+      "density": "compact"
+    }
+  ],
+  "uiCopySamples": [
+    "Resultado encontrado",
+    "Casos publicados",
+    "Qualidade dos dados"
+  ]
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: var(--space-3); background: var(--color-background); font: var(--type-body); color: var(--color-on-surface); }
+.specimen { display: grid; gap: var(--space-2); }
+.stage { display: grid; gap: var(--space-2); }
+.story { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: var(--space-2); align-items: start; }
+.story-label { padding-top: var(--space-2); color: var(--color-on-surface-variant); font: var(--type-caption); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+.rail { min-width: 0; display: flex; align-items: center; }
+.divider { margin: 0; border: 0; border-top: 1px solid var(--color-border); }
+/* @component-css-start */
+.sidebar { width: var(--sidebar-width); min-height: 520px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; background: var(--color-sidebar); }
+.sidebar__body { display: grid; gap: var(--space-4); padding: var(--space-4); }
+.sidebar__group { display: grid; gap: var(--space-1); }
+.sidebar__section { color: var(--color-on-surface-variant); font: var(--type-caption); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+.sidebar__nav { display: grid; gap: var(--space-1); }
+.sidebar__item { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: transparent; color: var(--color-on-surface); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background .15s,border-color .15s; }
+.sidebar__item:hover { background: var(--color-surface-container); }
+.sidebar__item--active { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+.sidebar__item--active:hover { background: var(--color-primary-container); filter: brightness(0.97); }
+.sidebar__indicator { width: 4px; height: 20px; flex-shrink: 0; background: var(--accent); }
+.sidebar__footer { padding: var(--space-4); border-top: 1px solid var(--color-border); color: var(--color-on-surface-variant); font: var(--type-caption); }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+<div class="stage">
+<div class="story"><div class="story-label">Operação</div><div class="rail"><nav class="sidebar" aria-label="Navegação principal" data-evidence-sample="admin-default"><div class="sidebar__body"><div class="sidebar__group"><div class="sidebar__section">Arquivo</div><div class="sidebar__nav"><a class="sidebar__item" href="#"><span>Visão geral</span></a><a class="sidebar__item" href="#"><span>Cemitérios</span></a><a class="sidebar__item" href="#"><span>Setores</span></a><a class="sidebar__item" href="#"><span>Quadras</span></a></div></div><div class="sidebar__group"><div class="sidebar__section">Gestão</div><div class="sidebar__nav"><a class="sidebar__item" href="#"><span>Equipe de campo</span></a><a class="sidebar__item" href="#"><span>Agenda técnica</span></a></div></div></div><div class="sidebar__footer">Resumo diário e apoio operacional</div></nav></div></div>
+<hr class="divider">
+<div class="story"><div class="story-label">Qualidade</div><div class="rail"><nav class="sidebar" aria-label="Navegação com item ativo" data-evidence-sample="admin-active"><div class="sidebar__body"><div class="sidebar__group"><div class="sidebar__section">Monitoramento</div><div class="sidebar__nav"><a class="sidebar__item" href="#"><span>Localizações</span></a><a class="sidebar__item sidebar__item--active" href="#" aria-current="page"><span class="sidebar__indicator" aria-hidden="true"></span><span>Casos funerários</span></a><a class="sidebar__item" href="#"><span>Movimentações</span></a><a class="sidebar__item" href="#"><span>Qualidade dos dados</span></a></div></div><div class="sidebar__group"><div class="sidebar__section">Acompanhamento</div><div class="sidebar__nav"><a class="sidebar__item" href="#"><span>Alertas de cadastro</span></a><a class="sidebar__item" href="#"><span>Conferências pendentes</span></a></div></div></div><div class="sidebar__footer">Fila priorizada para revisão serena</div></nav></div></div>
+</div>
+</div>
+</body>
+</html>

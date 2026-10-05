@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "slug": "table",
+  "name": "Table",
+  "category": "data-display",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from cemetery administration needs involving entities, funeral cases, movements, and data quality review.",
+  "keyInsightSeed": "Tables should feel orderly and civic, with readable density and zero visual hostility.",
+  "semanticTypeCandidates": [
+    "data-table",
+    "operations-table",
+    "review-list"
+  ],
+  "anatomy": [
+    "toolbar",
+    "filters",
+    "table-wrapper",
+    "header-row",
+    "body-row",
+    "status-cell",
+    "pagination"
+  ],
+  "variantDimensions": [
+    {
+      "name": "context",
+      "values": [
+        "admin-list",
+        "quality-review"
+      ]
+    },
+    {
+      "name": "toolbar",
+      "values": [
+        "visible",
+        "hidden"
+      ]
+    },
+    {
+      "name": "selection",
+      "values": [
+        "enabled",
+        "disabled"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "admin-list",
+      "title": "Casos funerários",
+      "context": "admin-list",
+      "toolbar": "visible",
+      "selection": "disabled"
+    },
+    {
+      "id": "quality-review",
+      "title": "Qualidade dos dados",
+      "context": "quality-review",
+      "toolbar": "visible",
+      "selection": "enabled"
+    }
+  ],
+  "uiCopySamples": [
+    "Casos funerários",
+    "Movimentações",
+    "Localização não confirmada"
+  ]
+}

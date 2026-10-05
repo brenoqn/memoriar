@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TopNav</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+/* Page scaffold — NOT extracted */ body{margin:0;padding:12px;background:var(--color-surface);font:var(--type-body);color:var(--color-on-surface);} .specimen{display:grid;gap:var(--space-2);} .header{display:none;} .stage{display:grid;gap:var(--space-2);} .story{display:grid;grid-template-columns:92px minmax(0,1fr);gap:var(--space-2);align-items:start;} .rail{display:flex;align-items:center;gap:var(--space-2);min-width:0;} .story-label{padding-top:var(--space-2);font:var(--type-caption);letter-spacing:.08em;text-transform:uppercase;color:var(--color-on-surface-variant);white-space:nowrap;} .divider{margin:0;border:0;border-top:1px solid var(--color-border);}
+/* @component-css-start */ .topnav{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:var(--space-3);width:100%;height:var(--nav-height);padding:0 var(--space-4);background:var(--color-surface-container-low);border-bottom:1px solid var(--color-border);min-width:0;} .brand{display:inline-flex;align-items:center;gap:var(--space-2);min-width:0;color:var(--color-on-surface);text-decoration:none;white-space:nowrap;} .brand-mark{display:grid;place-items:center;width:40px;height:40px;background:var(--color-primary-container);color:var(--color-primary);font:var(--type-h4);flex-shrink:0;} .brand-text{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:var(--type-h4);} .nav-links{display:flex;align-items:center;gap:var(--space-2);min-width:0;flex-wrap:wrap;} .nav-link,.util-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);height:40px;min-width:40px;padding:0 var(--space-3);background:transparent;border:0;color:var(--color-on-surface);font:var(--type-body);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .15s,border-color .15s;flex-shrink:0;} .nav-link:hover,.util-btn:hover{background:var(--accent-hover);} .nav-link.active{background:var(--color-primary-container);color:var(--link);} .search-btn{background:var(--color-surface-container);color:var(--color-on-surface);min-width:120px;} .search-btn:hover{background:var(--accent-hover);} .util-group{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;}
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+  <div class="stage">
+    <section class="story">
+      <div class="story-label">Início</div>
+      <div class="rail">
+        <nav class="topnav" aria-label="Navegação principal" data-evidence-sample="public-home">
+          <a class="brand" href="#">
+            <span class="brand-mark" aria-hidden="true">M</span>
+            <span class="brand-text">Memoriar</span>
+          </a>
+          <div class="nav-links">
+            <a class="nav-link" href="#">Consulta pública</a>
+            <a class="nav-link" href="#">Mapa lógico</a>
+            <a class="nav-link" href="#">Orientações</a>
+          </div>
+          <a class="util-btn search-btn" href="#">Buscar no acervo</a>
+          <div class="util-group">
+            <a class="util-btn" href="#">Ajuda</a>
+            <a class="util-btn" href="#">Entrar</a>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <hr class="divider">
+    <section class="story">
+      <div class="story-label">Resultados</div>
+      <div class="rail">
+        <nav class="topnav" aria-label="Navegação principal" data-evidence-sample="public-results">
+          <a class="brand" href="#">
+            <span class="brand-mark" aria-hidden="true">M</span>
+            <span class="brand-text">Memoriar</span>
+          </a>
+          <div class="nav-links">
+            <a class="nav-link active" href="#" aria-current="page">Resultados</a>
+            <a class="nav-link" href="#">Detalhes</a>
+            <a class="nav-link" href="#">Localização</a>
+          </div>
+          <a class="util-btn search-btn" href="#">Buscar no acervo</a>
+          <div class="util-group">
+            <a class="util-btn" href="#">Ajuda</a>
+            <a class="util-btn" href="#">Entrar</a>
+          </div>
+        </nav>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

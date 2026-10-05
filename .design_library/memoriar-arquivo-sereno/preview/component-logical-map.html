@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Logical Map</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body{margin:0;padding:var(--space-3);background:var(--color-background);color:var(--color-on-surface);font-family:var(--font-body);font-size:var(--font-size-body);font-weight:var(--font-weight-body);}
+.specimen{display:grid;gap:var(--space-3);}
+.story{display:grid;grid-template-columns:92px minmax(0,1fr);gap:var(--space-2);align-items:start;}
+.story-label{padding-top:var(--space-2);color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);letter-spacing:.08em;text-transform:uppercase;}
+.rail{display:grid;gap:var(--space-3);}
+/* @component-css-start */
+.map-showcase{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.95fr);gap:var(--space-3);align-items:start;}
+.map-panel,.delta-panel{border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-card);box-shadow:var(--shadow-2);}
+.map-panel{padding:var(--space-4);display:grid;gap:var(--space-4);}
+.panel-head{display:flex;justify-content:space-between;gap:var(--space-3);align-items:flex-start;}
+.panel-kicker,.legend-label,.meta-label{color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);letter-spacing:.08em;text-transform:uppercase;}
+.panel-title{margin:0;color:var(--color-on-surface);font-family:var(--font-heading);font-size:28px;line-height:1.2;}
+.panel-copy{margin:var(--space-1) 0 0;color:var(--color-muted-foreground);max-width:40ch;}
+.status-pill{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--radius-full);background:color-mix(in srgb,var(--color-success) 14%,var(--color-surface-container-low));color:var(--color-on-surface);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);white-space:nowrap;}
+.status-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--color-success);}
+.map-frame{display:grid;grid-template-columns:1fr 220px;gap:var(--space-4);align-items:start;}
+.map-canvas{padding:var(--space-4);border-radius:calc(var(--radius-lg) - 4px);background:linear-gradient(180deg,var(--color-surface-container-low),var(--color-surface));border:1px solid var(--color-outline-variant);display:grid;gap:var(--space-3);}
+.map-header{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);}
+.map-name{margin:0;font-family:var(--font-heading);font-size:22px;line-height:1.25;}
+.map-scale{color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);}
+.cemetery-grid{display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:var(--space-3);}
+.sector{min-height:124px;padding:var(--space-3);border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface-container);display:grid;align-content:space-between;gap:var(--space-2);}
+.sector-name{font-family:var(--font-heading);font-size:20px;line-height:1.2;}
+.sector-meta{color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);}
+.sector-lines{display:grid;gap:6px;}
+.sector-line{height:6px;border-radius:var(--radius-full);background:var(--color-outline-variant);}
+.sector.selected{border-color:var(--color-primary);background:color-mix(in srgb,var(--color-primary) 10%,var(--color-surface-container-high));box-shadow:0 0 0 1px color-mix(in srgb,var(--color-primary) 38%,transparent);}
+.sector.selected .sector-name{color:var(--color-primary);}
+.sector.selected .sector-line:nth-child(2){background:color-mix(in srgb,var(--color-primary) 56%,var(--color-outline-variant));}
+.map-meta{display:grid;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-surface-container-low);border:1px solid var(--color-outline-variant);}
+.meta-block{display:grid;gap:4px;}
+.meta-value{color:var(--color-on-surface);font-family:var(--font-body);font-size:var(--font-size-body);}
+.legend{display:grid;gap:var(--space-2);}
+.legend-row{display:flex;align-items:center;gap:var(--space-2);color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);}
+.legend-swatch{width:14px;height:14px;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface-container);}
+.legend-swatch.is-selected{border-color:var(--color-primary);background:color-mix(in srgb,var(--color-primary) 20%,var(--color-surface-container-high));}
+.delta-panel{padding:var(--space-4);display:grid;gap:var(--space-3);background:var(--color-surface);}
+.delta-card{display:grid;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-surface-container-low);border:1px solid var(--color-outline-variant);box-shadow:var(--shadow-1);}
+.delta-mini-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);}
+.delta-node{min-height:70px;padding:var(--space-2);border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface-container);display:grid;align-content:space-between;}
+.delta-node.active{border-color:var(--color-info);background:color-mix(in srgb,var(--color-info) 10%,var(--color-surface-container-high));}
+.delta-title{margin:0;font-family:var(--font-heading);font-size:20px;line-height:1.25;color:var(--color-on-surface);}
+.delta-copy,.delta-note{margin:0;color:var(--color-muted-foreground);}
+@media (max-width:900px){.map-showcase,.map-frame{grid-template-columns:1fr;}.cemetery-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+  <div class="story">
+    <div class="story-label">Prévia</div>
+    <div class="rail">
+      <div class="map-showcase">
+        <section class="map-panel" data-variant-id="public-wayfinding" data-context="public-wayfinding" data-state="selected">
+          <div class="panel-head">
+            <div>
+              <div class="panel-kicker">Mapa lógico</div>
+              <h1 class="panel-title">Cemitério Memorial Norte</h1>
+              <p class="panel-copy">Orientação espacial serena para localizar a área desejada com leitura simples, seleção evidente e percurso claro.</p>
+            </div>
+            <div class="status-pill">Localização confirmada</div>
+          </div>
+          <div class="map-frame">
+            <div class="map-canvas">
+              <div class="map-header">
+                <h2 class="map-name">Mapa lógico</h2>
+                <div class="map-scale">Navegação principal</div>
+              </div>
+              <div class="cemetery-grid" aria-label="Mapa lógico do cemitério">
+                <article class="sector">
+                  <div class="sector-name">Setor A</div>
+                  <div class="sector-meta">Acesso pelo jardim central</div>
+                  <div class="sector-lines"><span class="sector-line"></span><span class="sector-line"></span><span class="sector-line"></span></div>
+                </article>
+                <article class="sector selected" aria-current="true">
+                  <div class="sector-name">Quadra B</div>
+                  <div class="sector-meta">Seleção ativa</div>
+                  <div class="sector-lines"><span class="sector-line"></span><span class="sector-line"></span><span class="sector-line"></span></div>
+                </article>
+                <article class="sector">
+                  <div class="sector-name">Setor C</div>
+                  <div class="sector-meta">Ala memorial</div>
+                  <div class="sector-lines"><span class="sector-line"></span><span class="sector-line"></span><span class="sector-line"></span></div>
+                </article>
+                <article class="sector">
+                  <div class="sector-name">Setor D</div>
+                  <div class="sector-meta">Percurso secundário</div>
+                  <div class="sector-lines"><span class="sector-line"></span><span class="sector-line"></span><span class="sector-line"></span></div>
+                </article>
+                <article class="sector">
+                  <div class="sector-name">Setor E</div>
+                  <div class="sector-meta">Conexão lateral</div>
+                  <div class="sector-lines"><span class="sector-line"></span><span class="sector-line"></span><span class="sector-line"></span></div>
+                </article>
+                <article class="sector">
+                  <div class="sector-name">Setor F</div>
+                  <div class="sector-meta">Área silenciosa</div>
+                  <div class="sector-lines"><span class="sector-line"></span><span class="sector-line"></span><span class="sector-line"></span></div>
+                </article>
+              </div>
+            </div>
+            <aside class="map-meta">
+              <div class="meta-block"><div class="meta-label">Setor</div><div class="meta-value">Setor A</div></div>
+              <div class="meta-block"><div class="meta-label">Quadra</div><div class="meta-value">Quadra B</div></div>
+              <div class="meta-block"><div class="meta-label">Status</div><div class="meta-value">Localização confirmada</div></div>
+              <div class="legend">
+                <div class="legend-label">Legenda</div>
+                <div class="legend-row"><span class="legend-swatch"></span><span>Áreas do mapa</span></div>
+                <div class="legend-row"><span class="legend-swatch is-selected"></span><span>Seleção confirmada</span></div>
+              </div>
+            </aside>
+          </div>
+        </section>
+        <aside class="delta-panel" data-variant-id="admin-structure" data-context="admin-structure" data-state="default">
+          <div>
+            <div class="panel-kicker">Delta de estado</div>
+            <h2 class="delta-title">Estrutura territorial</h2>
+            <p class="delta-copy">Visão administrativa sem destaque ativo, usada para leitura da organização espacial e comparação entre blocos.</p>
+          </div>
+          <div class="delta-card">
+            <div class="delta-mini-map" aria-label="Estrutura territorial">
+              <div class="delta-node"><strong>Setor A</strong><span class="sector-meta">Entrada principal</span></div>
+              <div class="delta-node active"><strong>Quadra B</strong><span class="sector-meta">Referência estrutural</span></div>
+              <div class="delta-node"><strong>Setor C</strong><span class="sector-meta">Ligação norte</span></div>
+              <div class="delta-node"><strong>Setor D</strong><span class="sector-meta">Ligação sul</span></div>
+            </div>
+            <p class="delta-note">Sem confirmação operacional nesta leitura; a ênfase está na hierarquia do território e na clareza da distribuição.</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

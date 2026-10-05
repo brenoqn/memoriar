@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 2,
+  "slug": "input",
+  "name": "Input",
+  "category": "forms",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from the public search, admin login, and filter-heavy administrative workflows described for Memoriar.",
+  "keyInsightSeed": "Inputs should reduce emotional friction with generous clarity, quiet borders, and stable focus states.",
+  "semanticTypeCandidates": [
+    "text-input",
+    "search-input",
+    "form-field"
+  ],
+  "anatomy": [
+    "field-shell",
+    "label",
+    "input-control",
+    "supporting-text",
+    "leading-icon"
+  ],
+  "variantDimensions": [
+    {
+      "name": "type",
+      "values": [
+        "search",
+        "text",
+        "password"
+      ]
+    },
+    {
+      "name": "state",
+      "values": [
+        "default",
+        "focus",
+        "error",
+        "disabled"
+      ]
+    },
+    {
+      "name": "density",
+      "values": [
+        "comfortable",
+        "compact"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "search-default",
+      "label": "Nome do falecido",
+      "type": "search",
+      "state": "default",
+      "density": "comfortable"
+    },
+    {
+      "id": "reference-default",
+      "label": "Referência pública MEM-0001",
+      "type": "text",
+      "state": "default",
+      "density": "comfortable"
+    },
+    {
+      "id": "password-default",
+      "label": "Senha administrativa",
+      "type": "password",
+      "state": "default",
+      "density": "compact"
+    }
+  ],
+  "uiCopySamples": [
+    "Nome do falecido",
+    "Referência pública MEM-0001",
+    "Use suas credenciais administrativas"
+  ]
+}

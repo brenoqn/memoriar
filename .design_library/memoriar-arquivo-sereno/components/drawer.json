@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "slug": "drawer",
+  "name": "Drawer",
+  "category": "overlays",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from the public burial case detail drawer requirement and the need for calm, focused contextual reading.",
+  "keyInsightSeed": "O drawer deve concentrar leitura detalhada com acolhimento e foco, sem parecer painel técnico agressivo.",
+  "semanticTypeCandidates": [
+    "drawer",
+    "side-panel",
+    "detail-panel"
+  ],
+  "anatomy": [
+    "scrim",
+    "drawer-shell",
+    "header",
+    "title",
+    "meta",
+    "content-section",
+    "footer-actions"
+  ],
+  "variantDimensions": [
+    {
+      "name": "context",
+      "values": [
+        "public-detail",
+        "admin-edit"
+      ]
+    },
+    {
+      "name": "state",
+      "values": [
+        "default",
+        "loading"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "public-detail",
+      "title": "Detalhes do caso",
+      "context": "public-detail",
+      "state": "default"
+    },
+    {
+      "id": "admin-edit",
+      "title": "Atualizar informações",
+      "context": "admin-edit",
+      "state": "default"
+    }
+  ],
+  "uiCopySamples": [
+    "Detalhes do caso",
+    "Atualizar informações",
+    "Ver localização",
+    "Fechar"
+  ]
+}

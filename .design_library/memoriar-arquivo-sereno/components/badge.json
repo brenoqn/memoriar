@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "slug": "badge",
+  "name": "Badge",
+  "category": "status",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from Memoriar status communication needs across public results, quality review, publication state, and cemetery organization.",
+  "keyInsightSeed": "Badges devem sinalizar contexto e qualidade com delicadeza, nunca com saturação punitiva.",
+  "semanticTypeCandidates": [
+    "badge",
+    "status-tag",
+    "state-indicator"
+  ],
+  "anatomy": [
+    "badge-shell",
+    "tone-dot",
+    "label"
+  ],
+  "variantDimensions": [
+    {
+      "name": "tone",
+      "values": [
+        "info",
+        "success",
+        "warning",
+        "error"
+      ]
+    },
+    {
+      "name": "style",
+      "values": [
+        "soft",
+        "outlined"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "info-soft",
+      "label": "Publicado",
+      "tone": "info",
+      "style": "soft"
+    },
+    {
+      "id": "success-soft",
+      "label": "Localizado",
+      "tone": "success",
+      "style": "soft"
+    },
+    {
+      "id": "warning-soft",
+      "label": "Em revisão",
+      "tone": "warning",
+      "style": "soft"
+    },
+    {
+      "id": "error-outlined",
+      "label": "Pendência crítica",
+      "tone": "error",
+      "style": "outlined"
+    }
+  ],
+  "uiCopySamples": [
+    "Publicado",
+    "Localizado",
+    "Em revisão",
+    "Pendência crítica"
+  ]
+}

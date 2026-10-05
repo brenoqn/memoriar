@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 2,
+  "slug": "sidebar",
+  "name": "Sidebar",
+  "category": "navigation",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from the administrative structure described for Memoriar, with entities, quality workflows, and operational monitoring.",
+  "keyInsightSeed": "The sidebar should frame operations with serenity and structure, never with heavy contrast blocks.",
+  "semanticTypeCandidates": [
+    "sidebar",
+    "sidenav",
+    "admin-navigation"
+  ],
+  "anatomy": [
+    "sidebar-shell",
+    "section-label",
+    "nav-item",
+    "active-indicator",
+    "footer-slot"
+  ],
+  "variantDimensions": [
+    {
+      "name": "density",
+      "values": [
+        "default",
+        "compact"
+      ]
+    },
+    {
+      "name": "sectioning",
+      "values": [
+        "single-group",
+        "multi-group"
+      ]
+    },
+    {
+      "name": "state",
+      "values": [
+        "default",
+        "active"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "admin-default",
+      "items": [
+        "Visão geral",
+        "Cemitérios",
+        "Setores",
+        "Quadras"
+      ],
+      "density": "default",
+      "sectioning": "multi-group",
+      "state": "default"
+    },
+    {
+      "id": "admin-active",
+      "items": [
+        "Localizações",
+        "Casos funerários",
+        "Movimentações",
+        "Qualidade dos dados"
+      ],
+      "density": "default",
+      "sectioning": "multi-group",
+      "state": "active"
+    }
+  ],
+  "uiCopySamples": [
+    "Visão geral",
+    "Casos funerários",
+    "Qualidade dos dados"
+  ]
+}

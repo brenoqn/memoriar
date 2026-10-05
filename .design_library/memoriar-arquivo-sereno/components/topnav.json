@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "slug": "topnav",
+  "name": "TopNav",
+  "category": "navigation",
+  "sourceKind": "from-scratch",
+  "confidence": "medium",
+  "evidence": "AI-inferred from the public-facing civic search area and the need for gentle wayfinding across informative pages.",
+  "keyInsightSeed": "Top navigation should feel editorial and public-service oriented, not corporate or promotional.",
+  "semanticTypeCandidates": [
+    "top-bar",
+    "public-navigation",
+    "header-nav"
+  ],
+  "anatomy": [
+    "brand-mark",
+    "primary-links",
+    "search-shortcut",
+    "utility-actions"
+  ],
+  "variantDimensions": [
+    {
+      "name": "context",
+      "values": [
+        "public-home",
+        "public-results"
+      ]
+    },
+    {
+      "name": "state",
+      "values": [
+        "default",
+        "active"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "public-home",
+      "items": [
+        "Consulta pública",
+        "Mapa lógico",
+        "Orientações"
+      ],
+      "context": "public-home",
+      "state": "default"
+    },
+    {
+      "id": "public-results",
+      "items": [
+        "Resultados",
+        "Detalhes",
+        "Localização"
+      ],
+      "context": "public-results",
+      "state": "active"
+    }
+  ],
+  "uiCopySamples": [
+    "Consulta pública",
+    "Mapa lógico",
+    "Orientações"
+  ]
+}

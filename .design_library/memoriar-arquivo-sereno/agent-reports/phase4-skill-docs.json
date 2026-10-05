@@ -1,0 +1,9 @@
+{
+  "writtenFiles": [
+    "SKILL.md",
+    "library-consumption.json"
+  ],
+  "warnings": [
+    "uikit-plan.json não foi fornecido; coreComponents e supportComponents foram derivados apenas de generatedArtifacts."
+  ]
+}

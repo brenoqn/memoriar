@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "slug": "modal",
+  "name": "Modal",
+  "category": "overlays",
+  "sourceKind": "from-scratch",
+  "confidence": "high",
+  "evidence": "AI-inferred from administrative confirmation flows, publication review, and careful handling of sensitive actions in Memoriar.",
+  "keyInsightSeed": "O modal deve resolver decisões importantes com sobriedade institucional e texto muito claro.",
+  "semanticTypeCandidates": [
+    "modal",
+    "dialog",
+    "confirmation-dialog"
+  ],
+  "anatomy": [
+    "scrim",
+    "dialog-shell",
+    "header",
+    "title",
+    "body",
+    "actions"
+  ],
+  "variantDimensions": [
+    {
+      "name": "tone",
+      "values": [
+        "neutral",
+        "warning"
+      ]
+    },
+    {
+      "name": "intent",
+      "values": [
+        "confirm",
+        "review"
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "id": "confirm-neutral",
+      "title": "Confirmar publicação",
+      "tone": "neutral",
+      "intent": "confirm"
+    },
+    {
+      "id": "review-warning",
+      "title": "Registrar inconsistência",
+      "tone": "warning",
+      "intent": "review"
+    }
+  ],
+  "uiCopySamples": [
+    "Confirmar publicação",
+    "Registrar inconsistência",
+    "Cancelar",
+    "Confirmar"
+  ]
+}

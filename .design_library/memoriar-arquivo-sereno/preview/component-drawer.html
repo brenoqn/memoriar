@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: var(--space-3); background: var(--color-background); color: var(--color-on-surface); font-family: var(--font-body); font-size: var(--font-size-body); font-weight: var(--font-weight-body); line-height: 1.6; }
+.specimen { display: grid; gap: var(--space-2); }
+.stage { display: grid; gap: var(--space-2); }
+.story { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: var(--space-2); align-items: start; }
+.story-label { padding-top: var(--space-2); color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.rail { min-width: 0; display: flex; align-items: stretch; }
+.divider { margin: 0; border: 0; border-top: 1px solid var(--color-border); }
+/* @component-css-start */
+.drawer-scene { position: relative; width: min(100%, 1180px); min-height: 640px; display: grid; align-items: stretch; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--color-surface-container-low) 0%, var(--color-surface-container) 100%); box-shadow: var(--shadow-2); }
+.drawer-scene--delta { min-height: 560px; }
+.drawer-scene__content { padding: var(--space-6); display: grid; align-content: start; gap: var(--space-5); max-width: 54%; }
+.drawer-scene__eyebrow { color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .08em; text-transform: uppercase; }
+.drawer-scene__headline { margin: 0; font-family: var(--font-heading); font-size: 28px; font-weight: 600; line-height: 1.3; color: var(--color-on-surface); }
+.drawer-scene__supporting { margin: 0; color: var(--color-muted-foreground); }
+.drawer-scene__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.drawer-scene__card { padding: var(--space-4); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-md); background: rgba(255,255,255,.5); box-shadow: var(--shadow-1); }
+.drawer-scene__card strong { display: block; margin-bottom: var(--space-1); font-family: var(--font-heading); font-size: 18px; font-weight: 500; line-height: 1.35; }
+.drawer-scene__card span { color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); }
+.drawer-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(37,35,32,.04) 0%, rgba(37,35,32,.12) 56%, rgba(37,35,32,.18) 100%); pointer-events: none; }
+.drawer { position: absolute; top: var(--space-4); right: var(--space-4); bottom: var(--space-4); width: min(440px, calc(100% - var(--space-6))); display: grid; grid-template-rows: auto 1fr auto; border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-3); overflow: hidden; }
+.drawer__header { display: grid; gap: var(--space-2); padding: var(--space-5); border-bottom: 1px solid var(--color-border); background: var(--color-surface-container-low); }
+.drawer__title { margin: 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600; line-height: 1.3; color: var(--color-on-surface); }
+.drawer__meta { display: flex; flex-wrap: wrap; gap: var(--space-2); color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); }
+.drawer__badge { display: inline-flex; align-items: center; min-height: 28px; padding: 0 var(--space-3); border-radius: var(--radius-full); background: var(--color-secondary); color: var(--color-on-surface); }
+.drawer__body { padding: var(--space-5); display: grid; align-content: start; gap: var(--space-4); background: var(--color-surface); }
+.drawer__section { display: grid; gap: var(--space-2); }
+.drawer__section + .drawer__section { padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+.drawer__label { color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .08em; text-transform: uppercase; }
+.drawer__text { margin: 0; color: var(--color-on-surface); }
+.drawer__list { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-3); }
+.drawer__list li { display: grid; gap: var(--space-1); }
+.drawer__support { color: var(--color-muted-foreground); }
+.drawer__callout { padding: var(--space-4); border: 1px solid rgba(47,108,166,.18); border-radius: var(--radius-md); background: rgba(241,247,251,.9); }
+.drawer__callout .drawer__label { color: var(--color-info); }
+.drawer__actions { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-border); background: var(--color-surface-container-low); }
+.drawer__button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 var(--space-4); border-radius: var(--radius-full); border: 1px solid var(--color-border); background: transparent; color: var(--color-on-surface); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .04em; text-decoration: none; text-transform: uppercase; white-space: nowrap; }
+.drawer__button--primary { border-color: var(--color-primary); background: var(--color-primary); color: var(--color-on-primary); }
+.drawer__button--quiet { background: var(--color-surface); }
+.drawer__field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.drawer__field { display: grid; gap: var(--space-1); padding: var(--space-3); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-md); background: var(--color-surface-container-low); }
+.drawer__field-value { color: var(--color-on-surface); font-family: var(--font-body); font-size: var(--font-size-body); font-weight: var(--font-weight-body); }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+  <div class="stage">
+    <div class="story">
+      <div class="story-label">Principal</div>
+      <div class="rail">
+        <section class="drawer-scene" data-evidence-sample="public-detail">
+          <div class="drawer-scene__content" aria-hidden="true">
+            <div>
+              <div class="drawer-scene__eyebrow">Consulta pública</div>
+              <h1 class="drawer-scene__headline">Leitura serena do acervo com foco nas informações que ajudam a orientar a visita.</h1>
+            </div>
+            <p class="drawer-scene__supporting">O painel lateral preserva o contexto principal da navegação e oferece detalhes sensíveis com clareza, respiro e linguagem respeitosa.</p>
+            <div class="drawer-scene__grid">
+              <div class="drawer-scene__card"><strong>Capela da Saudade</strong><span>Referência principal da visita</span></div>
+              <div class="drawer-scene__card"><strong>Quadra 7 • Aléia Norte</strong><span>Localização para orientação presencial</span></div>
+              <div class="drawer-scene__card"><strong>Registro confirmado</strong><span>Informações revisadas pela curadoria</span></div>
+              <div class="drawer-scene__card"><strong>Atualização recente</strong><span>Última conferência documental nesta semana</span></div>
+            </div>
+          </div>
+          <div class="drawer-scrim" aria-hidden="true"></div>
+          <aside class="drawer" aria-label="Detalhes do caso">
+            <header class="drawer__header">
+              <h2 class="drawer__title">Detalhes do caso</h2>
+              <div class="drawer__meta">
+                <span class="drawer__badge">Consulta pública</span>
+                <span>Arquivo Sereno</span>
+                <span>Atualizado hoje</span>
+              </div>
+            </header>
+            <div class="drawer__body">
+              <section class="drawer__section">
+                <div class="drawer__label">Identificação</div>
+                <p class="drawer__text">Maria de Lourdes Souza</p>
+                <p class="drawer__support">Registro funerário preservado com referência de visitação e contexto histórico disponível para leitura cuidadosa.</p>
+              </section>
+              <section class="drawer__section">
+                <div class="drawer__label">Localização</div>
+                <ul class="drawer__list">
+                  <li><strong>Cemitério da Colina</strong><span class="drawer__support">Quadra 7 • Aléia Norte • Jazigo 14</span></li>
+                  <li><strong>Sepultamento</strong><span class="drawer__support">14 de maio de 1988</span></li>
+                </ul>
+              </section>
+              <section class="drawer__section">
+                <div class="drawer__label">Contexto</div>
+                <p class="drawer__text">A família autorizou a exibição das informações essenciais para orientar buscas presenciais e preservar a memória com discrição.</p>
+              </section>
+            </div>
+            <footer class="drawer__actions">
+              <a class="drawer__button drawer__button--primary" href="/">Ver localização</a>
+              <a class="drawer__button drawer__button--quiet" href="/">Fechar</a>
+            </footer>
+          </aside>
+        </section>
+      </div>
+    </div>
+    <hr class="divider">
+    <div class="story">
+      <div class="story-label">Delta</div>
+      <div class="rail">
+        <section class="drawer-scene drawer-scene--delta" data-evidence-sample="admin-edit">
+          <div class="drawer-scene__content" aria-hidden="true">
+            <div>
+              <div class="drawer-scene__eyebrow">Acompanhamento interno</div>
+              <h2 class="drawer-scene__headline">A mesma estrutura acolhe ajustes com foco na revisão cuidadosa dos dados.</h2>
+            </div>
+            <p class="drawer-scene__supporting">A variação prioriza leitura comparativa, notas de curadoria e campos essenciais, sem transformar o painel em uma tela pesada.</p>
+          </div>
+          <div class="drawer-scrim" aria-hidden="true"></div>
+          <aside class="drawer" aria-label="Atualizar informações">
+            <header class="drawer__header">
+              <h2 class="drawer__title">Atualizar informações</h2>
+              <div class="drawer__meta">
+                <span class="drawer__badge">Curadoria</span>
+                <span>Revisão tranquila</span>
+              </div>
+            </header>
+            <div class="drawer__body">
+              <section class="drawer__section">
+                <div class="drawer__label">Campos principais</div>
+                <div class="drawer__field-grid">
+                  <div class="drawer__field">
+                    <span class="drawer__label">Nome exibido</span>
+                    <span class="drawer__field-value">Maria de Lourdes Souza</span>
+                  </div>
+                  <div class="drawer__field">
+                    <span class="drawer__label">Local da visita</span>
+                    <span class="drawer__field-value">Quadra 7 • Aléia Norte</span>
+                  </div>
+                </div>
+              </section>
+              <section class="drawer__section">
+                <div class="drawer__callout">
+                  <div class="drawer__label">Observação</div>
+                  <p class="drawer__text">Atualização sugerida para incluir a referência completa do jazigo e manter a orientação da família sem expor detalhes excessivos.</p>
+                </div>
+              </section>
+            </div>
+            <footer class="drawer__actions">
+              <a class="drawer__button drawer__button--primary" href="/">Ver localização</a>
+              <a class="drawer__button drawer__button--quiet" href="/">Fechar</a>
+            </footer>
+          </aside>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin:0; padding:var(--space-3); background:var(--color-background); color:var(--color-on-surface); font:var(--type-body); }
+.specimen { display:grid; gap:var(--space-2); }
+.stage { display:grid; gap:var(--space-2); }
+.story { display:grid; grid-template-columns:92px minmax(0,1fr); gap:var(--space-2); align-items:start; }
+.rail { display:flex; gap:var(--space-2); align-items:center; min-width:0; }
+.story-label { padding-top:var(--space-2); color:var(--color-on-surface-variant); font:var(--type-caption); letter-spacing:.08em; text-transform:uppercase; white-space:nowrap; }
+.divider { margin:0; border:none; border-top:1px solid var(--color-border); }
+/* @component-css-start */
+.card { width:100%; display:grid; gap:var(--space-2); min-width:0; padding:var(--space-4); border:1px solid var(--color-border); background:var(--color-surface); transition:background .15s,border-color .15s; }
+.card:hover { filter:brightness(.97); }
+.card[aria-disabled="true"] { pointer-events:none; background:var(--color-surface-container-low); }
+.card-metric { background:var(--color-primary-container); border-color:var(--color-primary); }
+.card-status { border-color:var(--color-warning); }
+.card-eyebrow { color:var(--color-on-surface-variant); font:var(--type-caption); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-title { margin:0; min-width:0; color:var(--color-on-surface); font:var(--type-h4); word-break:keep-all; overflow-wrap:break-word; }
+.card-supporting { margin:0; min-width:0; color:var(--color-on-surface-variant); font:var(--type-body); overflow-wrap:break-word; }
+.card-value { min-width:0; color:var(--color-on-surface); font:var(--type-h4); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-meta { display:flex; justify-content:space-between; gap:var(--space-2); align-items:center; min-width:0; color:var(--color-on-surface-variant); font:var(--type-caption); }
+.card-meta span { min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-action { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; min-width:var(--size-button-height-md); height:var(--size-button-height-md); padding:0 var(--space-3); border:1px solid var(--accent); background:var(--accent); color:var(--accent-foreground); font:var(--type-caption); letter-spacing:.04em; text-decoration:none; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:background .15s,border-color .15s; }
+.card-action:hover { background:var(--accent-hover); border-color:var(--accent-hover); }
+.card[aria-disabled="true"] .card-action { background:var(--color-surface-container-high); border-color:var(--color-border); color:var(--color-on-surface-variant); }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+<div class="stage">
+<div class="story" data-evidence-sample="result-card"><span class="story-label">Resultado</span><div class="rail"><article class="card card-result"><span class="card-eyebrow">Resultado encontrado</span><h1 class="card-title">Maria de Lourdes Souza</h1><p class="card-supporting">Registro localizado no Arquivo Sereno com setor, contexto e atualização recente prontos para consulta.</p><strong class="card-value">Quadra B • Setor 3</strong><div class="card-meta"><span>Atualizado hoje</span><a class="card-action" href="/">Abrir ficha</a></div></article></div></div>
+<div class="story" data-evidence-sample="result-card"><span class="story-label">Desabilitado</span><div class="rail"><article class="card card-result" aria-disabled="true"><span class="card-eyebrow">Resultado encontrado</span><h2 class="card-title">Maria de Lourdes Souza</h2><p class="card-supporting">Registro temporariamente indisponível enquanto a equipe conclui a revisão documental.</p><strong class="card-value">Quadra B • Setor 3</strong><div class="card-meta"><span>Liberação em análise</span><span class="card-action">Abrir ficha</span></div></article></div></div>
+<hr class="divider">
+<div class="story" data-evidence-sample="metric-card"><span class="story-label">Métrica</span><div class="rail"><article class="card card-metric"><span class="card-eyebrow">Casos publicados</span><h2 class="card-title">Visão consolidada</h2><p class="card-supporting">Painel para acompanhar o volume de publicações disponíveis no acervo digital.</p><strong class="card-value">1.248</strong><div class="card-meta"><span>Base pública</span><a class="card-action" href="/">Ver detalhes</a></div></article></div></div>
+<div class="story" data-evidence-sample="status-card"><span class="story-label">Status</span><div class="rail"><article class="card card-status"><span class="card-eyebrow">Qualidade dos dados</span><h2 class="card-title">Pendências priorizadas</h2><p class="card-supporting">Itens que precisam de revisão para manter a leitura histórica clara e completa.</p><strong class="card-value">18 pendências</strong><div class="card-meta"><span>Revisão semanal</span><a class="card-action" href="/">Resolver</a></div></article></div></div>
+</div>
+</div>
+</body>
+</html>

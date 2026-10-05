@@ -1,0 +1,200 @@
+/* ═══════════════════════════════════════════════════════════════
+   components.css — Design System Component Definitions
+   Auto-extracted from preview/component-*.html
+   DO NOT EDIT MANUALLY — regenerate via extract-components-css.mjs
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Badge ─────────────────────────────────────────────────── */
+/* @anatomy
+   <span class="badge soft info-soft"><span class="tone-dot" aria-hidden="true"></span><span>Publicado</span></span> <span class="badge soft success-soft"><span class="tone-dot" aria-hidden="true"></span><span>Localizado</span></span>
+*/
+.badge{display:inline-flex;align-items:center;gap:var(--space-2);min-height:28px;padding:0 var(--space-3);border:1px solid transparent;border-radius:var(--radius-md);box-shadow:var(--shadow-1);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);letter-spacing:.01em;white-space:nowrap;flex-shrink:0;}
+.tone-dot{width:8px;height:8px;border-radius:var(--radius-full);flex-shrink:0;}
+.badge.soft{background:var(--color-surface-container-low);border-color:var(--color-outline-variant);color:var(--color-on-surface);}
+.badge.outlined{background:var(--color-surface);border-color:var(--color-outline);color:var(--color-on-surface);}
+.badge.info-soft .tone-dot{background:var(--color-info);}
+.badge.success-soft{background:var(--color-surface-container);}.badge.success-soft .tone-dot{background:var(--color-success);}
+.badge.warning-soft{background:var(--color-surface-container-high);}.badge.warning-soft .tone-dot{background:var(--color-warning);}
+.badge.error-outlined{border-color:var(--color-error);}.badge.error-outlined .tone-dot{background:var(--color-error);}
+
+/* ── Button ────────────────────────────────────────────────── */
+/* @anatomy
+   <button class="btn primary">Buscar falecido</button><button class="btn primary" disabled>Buscar falecido</button><button class="btn secondary">Ver localização</button><button class="btn secondary" disabled>Ver localização</button>
+*/
+.btn{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-width:var(--size-button-height-md);padding:0 var(--space-4);border:1px solid transparent;background:transparent;color:var(--color-on-surface);font:var(--type-body);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;transition:background .15s,border-color .15s,color .15s;}
+.btn:focus-visible{outline:2px solid currentColor;outline-offset:2px;}
+.btn:disabled{cursor:not-allowed;}
+.btn.primary{height:var(--size-button-height-md);background:var(--color-primary);color:var(--color-on-primary);}
+.btn.primary:hover{background:var(--color-primary-hover);}
+.btn.primary:disabled{background:var(--color-surface-container-high);color:var(--color-on-surface-variant);}
+.btn.secondary{height:var(--size-button-height-md);background:var(--color-secondary-container);color:var(--color-on-secondary-container);border-color:var(--color-border);}
+.btn.secondary:hover{background:var(--color-surface-container);border-color:var(--color-outline);}
+.btn.secondary:disabled{background:var(--color-surface-container-low);color:var(--color-on-surface-variant);border-color:var(--color-outline-variant);}
+.btn.ghost{height:var(--size-button-height-sm);min-width:var(--size-button-height-sm);padding:0 var(--space-3);color:var(--link);}
+.btn.ghost:hover{background:var(--color-surface-container-low);}
+.btn.ghost:disabled{color:var(--color-on-surface-variant);}
+
+/* ── Card ──────────────────────────────────────────────────── */
+/* @anatomy
+   <article class="card card-result"><span class="card-eyebrow">Resultado encontrado</span><h1 class="card-title">Maria de Lourdes Souza</h1><p class="card-supporting">Registro localizado no Arquivo Sereno com setor, contexto e atualização recente prontos para consulta.</p><strong class="card-value">Quadra B • Setor 3</strong><div class="card-meta"><span>Atualizado hoje</span><a class="card-action...
+*/
+.card { width:100%; display:grid; gap:var(--space-2); min-width:0; padding:var(--space-4); border:1px solid var(--color-border); background:var(--color-surface); transition:background .15s,border-color .15s; }
+.card:hover { filter:brightness(.97); }
+.card[aria-disabled="true"] { pointer-events:none; background:var(--color-surface-container-low); }
+.card-metric { background:var(--color-primary-container); border-color:var(--color-primary); }
+.card-status { border-color:var(--color-warning); }
+.card-eyebrow { color:var(--color-on-surface-variant); font:var(--type-caption); letter-spacing:.06em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-title { margin:0; min-width:0; color:var(--color-on-surface); font:var(--type-h4); word-break:keep-all; overflow-wrap:break-word; }
+.card-supporting { margin:0; min-width:0; color:var(--color-on-surface-variant); font:var(--type-body); overflow-wrap:break-word; }
+.card-value { min-width:0; color:var(--color-on-surface); font:var(--type-h4); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-meta { display:flex; justify-content:space-between; gap:var(--space-2); align-items:center; min-width:0; color:var(--color-on-surface-variant); font:var(--type-caption); }
+.card-meta span { min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-action { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; min-width:var(--size-button-height-md); height:var(--size-button-height-md); padding:0 var(--space-3); border:1px solid var(--accent); background:var(--accent); color:var(--accent-foreground); font:var(--type-caption); letter-spacing:.04em; text-decoration:none; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:background .15s,border-color .15s; }
+.card-action:hover { background:var(--accent-hover); border-color:var(--accent-hover); }
+.card[aria-disabled="true"] .card-action { background:var(--color-surface-container-high); border-color:var(--color-border); color:var(--color-on-surface-variant); }
+
+/* ── Drawer ────────────────────────────────────────────────── */
+/* @anatomy
+   <section class="drawer-scene" data-evidence-sample="public-detail"> <div class="drawer-scene__content" aria-hidden="true"> <div> <div class="drawer-scene__eyebrow">Consulta pública
+*/
+.drawer-scene { position: relative; width: min(100%, 1180px); min-height: 640px; display: grid; align-items: stretch; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--color-surface-container-low) 0%, var(--color-surface-container) 100%); box-shadow: var(--shadow-2); }
+.drawer-scene--delta { min-height: 560px; }
+.drawer-scene__content { padding: var(--space-6); display: grid; align-content: start; gap: var(--space-5); max-width: 54%; }
+.drawer-scene__eyebrow { color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .08em; text-transform: uppercase; }
+.drawer-scene__headline { margin: 0; font-family: var(--font-heading); font-size: 28px; font-weight: 600; line-height: 1.3; color: var(--color-on-surface); }
+.drawer-scene__supporting { margin: 0; color: var(--color-muted-foreground); }
+.drawer-scene__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.drawer-scene__card { padding: var(--space-4); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-md); background: rgba(255,255,255,.5); box-shadow: var(--shadow-1); }
+.drawer-scene__card strong { display: block; margin-bottom: var(--space-1); font-family: var(--font-heading); font-size: 18px; font-weight: 500; line-height: 1.35; }
+.drawer-scene__card span { color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); }
+.drawer-scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(37,35,32,.04) 0%, rgba(37,35,32,.12) 56%, rgba(37,35,32,.18) 100%); pointer-events: none; }
+.drawer { position: absolute; top: var(--space-4); right: var(--space-4); bottom: var(--space-4); width: min(440px, calc(100% - var(--space-6))); display: grid; grid-template-rows: auto 1fr auto; border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-3); overflow: hidden; }
+.drawer__header { display: grid; gap: var(--space-2); padding: var(--space-5); border-bottom: 1px solid var(--color-border); background: var(--color-surface-container-low); }
+.drawer__title { margin: 0; font-family: var(--font-heading); font-size: 26px; font-weight: 600; line-height: 1.3; color: var(--color-on-surface); }
+.drawer__meta { display: flex; flex-wrap: wrap; gap: var(--space-2); color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); }
+.drawer__badge { display: inline-flex; align-items: center; min-height: 28px; padding: 0 var(--space-3); border-radius: var(--radius-full); background: var(--color-secondary); color: var(--color-on-surface); }
+.drawer__body { padding: var(--space-5); display: grid; align-content: start; gap: var(--space-4); background: var(--color-surface); }
+.drawer__section { display: grid; gap: var(--space-2); }
+.drawer__section + .drawer__section { padding-top: var(--space-4); border-top: 1px solid var(--color-border); }
+.drawer__label { color: var(--color-on-surface-variant); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .08em; text-transform: uppercase; }
+.drawer__text { margin: 0; color: var(--color-on-surface); }
+.drawer__list { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--space-3); }
+.drawer__list li { display: grid; gap: var(--space-1); }
+.drawer__support { color: var(--color-muted-foreground); }
+.drawer__callout { padding: var(--space-4); border: 1px solid rgba(47,108,166,.18); border-radius: var(--radius-md); background: rgba(241,247,251,.9); }
+.drawer__callout .drawer__label { color: var(--color-info); }
+.drawer__actions { display: flex; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-top: 1px solid var(--color-border); background: var(--color-surface-container-low); }
+.drawer__button { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 var(--space-4); border-radius: var(--radius-full); border: 1px solid var(--color-border); background: transparent; color: var(--color-on-surface); font-family: var(--font-body); font-size: var(--font-size-caption); font-weight: var(--font-weight-caption); letter-spacing: .04em; text-decoration: none; text-transform: uppercase; white-space: nowrap; }
+.drawer__button--primary { border-color: var(--color-primary); background: var(--color-primary); color: var(--color-on-primary); }
+.drawer__button--quiet { background: var(--color-surface); }
+.drawer__field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.drawer__field { display: grid; gap: var(--space-1); padding: var(--space-3); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-md); background: var(--color-surface-container-low); }
+.drawer__field-value { color: var(--color-on-surface); font-family: var(--font-body); font-size: var(--font-size-body); font-weight: var(--font-weight-body); }
+
+/* ── Input ─────────────────────────────────────────────────── */
+/* @anatomy
+   <label class="field" data-evidence-sample="search-default"> <span class="field-label">Nome do falecido</span> <span class="field-control"> <i data-lucide="search" aria-hidden="true"></i> <input type="search" placeholder="Nome do falecido"> </span> <span class="field-help">Pesquise por nome ou referência pública.</span> </label>
+*/
+.field { display: flex; flex-direction: column; gap: var(--space-2); width: 248px; min-width: 0; overflow: hidden; flex-shrink: 0; }
+.field.is-compact { width: 216px; }
+.field-label { color: var(--color-on-surface); font: var(--type-caption); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.field-control { display: flex; align-items: center; gap: var(--space-2); height: var(--size-input-height); padding: 0 var(--space-3); border: 1px solid var(--color-outline); background: var(--surface-bright); color: var(--color-on-surface); transition: background .15s,border-color .15s; }
+.field.is-compact .field-control { height: var(--size-button-height-sm); }
+.field-control:hover { border-color: var(--color-primary); background: var(--color-surface-container-low); }
+.field:focus-within .field-control { border-color: var(--color-primary); outline: 2px solid var(--ring); outline-offset: 2px; }
+.field-control i { width: var(--size-icon-sm); height: var(--size-icon-sm); color: var(--color-muted-foreground); flex-shrink: 0; }
+.field-control input { width: 100%; min-width: 0; border: 0; background: transparent; color: inherit; font: var(--type-body); outline: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.field-control input::placeholder { color: var(--color-muted-foreground); }
+.field-help { color: var(--color-muted-foreground); font: var(--type-caption); overflow-wrap: break-word; }
+.field.is-error .field-control { border-color: var(--color-error); background: var(--color-error-container); color: var(--color-on-error-container); }
+.field.is-error .field-help { color: var(--color-error); }
+.field.is-disabled .field-control { border-color: var(--color-outline-variant); background: var(--color-surface-container); color: var(--color-muted-foreground); }
+.field.is-disabled input { color: var(--color-muted-foreground); cursor: not-allowed; }
+
+/* ── Logical Map ───────────────────────────────────────────── */
+/* @anatomy
+   <div class="map-showcase"> <section class="map-panel" data-variant-id="public-wayfinding" data-context="public-wayfinding" data-state="selected"> <div class="panel-head"> <div> <div class="panel-kicker">Mapa lógico
+*/
+.map-showcase{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.95fr);gap:var(--space-3);align-items:start;}
+.map-panel,.delta-panel{border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-card);box-shadow:var(--shadow-2);}
+.map-panel{padding:var(--space-4);display:grid;gap:var(--space-4);}
+.panel-head{display:flex;justify-content:space-between;gap:var(--space-3);align-items:flex-start;}
+.panel-kicker,.legend-label,.meta-label{color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);letter-spacing:.08em;text-transform:uppercase;}
+.panel-title{margin:0;color:var(--color-on-surface);font-family:var(--font-heading);font-size:28px;line-height:1.2;}
+.panel-copy{margin:var(--space-1) 0 0;color:var(--color-muted-foreground);max-width:40ch;}
+.status-pill{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-radius:var(--radius-full);background:color-mix(in srgb,var(--color-success) 14%,var(--color-surface-container-low));color:var(--color-on-surface);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);white-space:nowrap;}
+.status-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--color-success);}
+.map-frame{display:grid;grid-template-columns:1fr 220px;gap:var(--space-4);align-items:start;}
+.map-canvas{padding:var(--space-4);border-radius:calc(var(--radius-lg) - 4px);background:linear-gradient(180deg,var(--color-surface-container-low),var(--color-surface));border:1px solid var(--color-outline-variant);display:grid;gap:var(--space-3);}
+.map-header{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);}
+.map-name{margin:0;font-family:var(--font-heading);font-size:22px;line-height:1.25;}
+.map-scale{color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);}
+.cemetery-grid{display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:var(--space-3);}
+.sector{min-height:124px;padding:var(--space-3);border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface-container);display:grid;align-content:space-between;gap:var(--space-2);}
+.sector-name{font-family:var(--font-heading);font-size:20px;line-height:1.2;}
+.sector-meta{color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);}
+.sector-lines{display:grid;gap:6px;}
+.sector-line{height:6px;border-radius:var(--radius-full);background:var(--color-outline-variant);}
+.sector.selected{border-color:var(--color-primary);background:color-mix(in srgb,var(--color-primary) 10%,var(--color-surface-container-high));box-shadow:0 0 0 1px color-mix(in srgb,var(--color-primary) 38%,transparent);}
+.sector.selected .sector-name{color:var(--color-primary);}
+.sector.selected .sector-line:nth-child(2){background:color-mix(in srgb,var(--color-primary) 56%,var(--color-outline-variant));}
+.map-meta{display:grid;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-surface-container-low);border:1px solid var(--color-outline-variant);}
+.meta-block{display:grid;gap:4px;}
+.meta-value{color:var(--color-on-surface);font-family:var(--font-body);font-size:var(--font-size-body);}
+.legend{display:grid;gap:var(--space-2);}
+.legend-row{display:flex;align-items:center;gap:var(--space-2);color:var(--color-on-surface-variant);font-family:var(--font-body);font-size:var(--font-size-caption);font-weight:var(--font-weight-caption);}
+.legend-swatch{width:14px;height:14px;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface-container);}
+.legend-swatch.is-selected{border-color:var(--color-primary);background:color-mix(in srgb,var(--color-primary) 20%,var(--color-surface-container-high));}
+.delta-panel{padding:var(--space-4);display:grid;gap:var(--space-3);background:var(--color-surface);}
+.delta-card{display:grid;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-surface-container-low);border:1px solid var(--color-outline-variant);box-shadow:var(--shadow-1);}
+.delta-mini-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);}
+.delta-node{min-height:70px;padding:var(--space-2);border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-surface-container);display:grid;align-content:space-between;}
+.delta-node.active{border-color:var(--color-info);background:color-mix(in srgb,var(--color-info) 10%,var(--color-surface-container-high));}
+.delta-title{margin:0;font-family:var(--font-heading);font-size:20px;line-height:1.25;color:var(--color-on-surface);}
+.delta-copy,.delta-note{margin:0;color:var(--color-muted-foreground);}
+@media (max-width:900px){.map-showcase,.map-frame{grid-template-columns:1fr;}.cemetery-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+
+/* ── Modal ─────────────────────────────────────────────────── */
+/* @anatomy
+   <span class="label">Confirmar publicação</span> <div class="scene"> <div class="scrim"> <div class="modal"> <div class="modal-header"> <h1 class="title">Confirmar publicação</h1>
+*/
+.scene { flex: 1 0 0; width: 100%; min-height: 320px; padding: var(--space-6); border: 1px solid var(--color-outline-variant); border-radius: var(--radius-lg); background: var(--color-background); box-shadow: var(--shadow-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.scrim { width: 100%; padding: var(--space-6); border-radius: var(--radius-md); background: color-mix(in srgb, var(--color-on-surface) 8%, var(--color-background)); display: flex; justify-content: center; }
+.modal { width: min(100%, 560px); background: var(--color-card); border: 1px solid var(--color-border); border-radius: var(--radius-lg); box-shadow: var(--shadow-5); overflow: hidden; }
+.modal.warning { border-color: var(--color-outline); }
+.modal-header { padding: var(--space-5) var(--space-5) var(--space-4); border-bottom: 1px solid var(--color-outline-variant); background: var(--color-surface-container-low); }
+.modal.warning .modal-header { box-shadow: inset 0 2px 0 0 var(--color-warning); }
+.title { margin: 0; font-family: var(--font-heading); font-size: 1.5rem; line-height: 1.25; color: var(--color-on-surface); }
+.body { padding: var(--space-5); background: var(--color-card); }
+.message { margin: 0; font-size: var(--font-size-body); line-height: 1.55; color: var(--color-on-surface-variant); }
+.actions { display: flex; justify-content: flex-end; gap: var(--space-3); padding: var(--space-4) var(--space-5) var(--space-5); border-top: 1px solid var(--color-outline-variant); background: var(--color-surface-container-low); }
+.button { min-width: 128px; height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-container-high); color: var(--color-on-surface); font-family: var(--font-body); font-size: var(--font-size-body); font-weight: var(--font-weight-body); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.button.primary { border-color: var(--color-primary); background: var(--color-primary); color: var(--color-on-primary); box-shadow: var(--shadow-2); }
+
+/* ── Sidebar ───────────────────────────────────────────────── */
+/* @anatomy
+   <nav class="sidebar" aria-label="Navegação principal" data-evidence-sample="admin-default"><div class="sidebar__body"><div class="sidebar__group"><div class="sidebar__section">Arquivo
+*/
+.sidebar { width: var(--sidebar-width); min-height: 520px; display: flex; flex-direction: column; justify-content: space-between; flex-shrink: 0; background: var(--color-sidebar); }
+.sidebar__body { display: grid; gap: var(--space-4); padding: var(--space-4); }
+.sidebar__group { display: grid; gap: var(--space-1); }
+.sidebar__section { color: var(--color-on-surface-variant); font: var(--type-caption); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+.sidebar__nav { display: grid; gap: var(--space-1); }
+.sidebar__item { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: transparent; color: var(--color-on-surface); text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background .15s,border-color .15s; }
+.sidebar__item:hover { background: var(--color-surface-container); }
+.sidebar__item--active { background: var(--color-primary-container); color: var(--color-on-primary-container); }
+.sidebar__item--active:hover { background: var(--color-primary-container); filter: brightness(0.97); }
+.sidebar__indicator { width: 4px; height: 20px; flex-shrink: 0; background: var(--accent); }
+.sidebar__footer { padding: var(--space-4); border-top: 1px solid var(--color-border); color: var(--color-on-surface-variant); font: var(--type-caption); }
+
+/* ── Table ─────────────────────────────────────────────────── */
+/* @anatomy
+   <section class="table-card" data-evidence-sample="admin-list"><div class="table-toolbar"><div class="table-title">Casos funerários
+*/
+.table-card{width:100%;background:var(--surface-container-lowest);border:1px solid var(--color-border);}.table-toolbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);padding:var(--space-3);border-bottom:1px solid var(--color-border);}.table-title{min-width:0;font:var(--type-h4);word-break:keep-all;overflow-wrap:break-word;}.table-meta{font:var(--type-caption);color:var(--color-on-surface-variant);white-space:nowrap;}.table-filters{display:flex;flex-wrap:wrap;gap:var(--space-2);padding:var(--space-2) var(--space-3);border-bottom:1px solid var(--color-border);}.filter-chip{display:inline-flex;align-items:center;min-width:32px;padding:var(--space-1) var(--space-2);border:1px solid var(--color-border);background:var(--color-surface);font:var(--type-caption);color:var(--color-on-surface);white-space:nowrap;}.table-shell{overflow-x:auto;}.table{width:100%;border-collapse:collapse;table-layout:fixed;}.table th,.table td{padding:var(--space-2) var(--space-3);text-align:left;border-bottom:1px solid var(--color-border);min-width:0;overflow:hidden;text-overflow:ellipsis;}.table th{font:var(--type-caption);letter-spacing:.04em;text-transform:uppercase;color:var(--color-on-surface-variant);white-space:nowrap;background:var(--color-surface-container-low);}.table td{font:var(--type-body);color:var(--color-on-surface);}.table tbody tr:hover td{filter:brightness(.97);}.status-ok{color:var(--color-success);}.status-alert{color:var(--color-warning);}.status-pending{color:var(--color-info);}.pagination{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3);font:var(--type-caption);color:var(--color-on-surface-variant);}.select-col{width:44px;}.check{display:inline-block;flex-shrink:0;width:16px;height:16px;border:1px solid var(--color-outline);background:var(--surface-container-lowest);}.table-card.is-disabled{background:var(--color-surface-container-low);}.table-card.is-disabled th,.table-card.is-disabled td,.table-card.is-disabled .table-title,.table-card.is-disabled .table-meta,.table-card.is-disabled .filter-chip,.table-card.is-disabled .pagination{color:var(--color-on-surface-variant);}.table-card.is-disabled .filter-chip{background:var(--color-surface-container-low);}.table-card.is-disabled .table tbody tr:hover td{filter:none;}
+
+/* ── Topnav ────────────────────────────────────────────────── */
+/* @anatomy
+   <nav class="topnav" aria-label="Navegação principal" data-evidence-sample="public-home"> <a class="brand" href="#"> <span class="brand-mark" aria-hidden="true">M</span> <span class="brand-text">Memoriar</span> </a> <div class="nav-links"> <a class="nav-link" href="#">Consulta pública</a> <a class="nav-link" href="#">Mapa lógico</a> <a class="nav-link" href="#">Orientações</a>
+*/
+.topnav{display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:var(--space-3);width:100%;height:var(--nav-height);padding:0 var(--space-4);background:var(--color-surface-container-low);border-bottom:1px solid var(--color-border);min-width:0;} .brand{display:inline-flex;align-items:center;gap:var(--space-2);min-width:0;color:var(--color-on-surface);text-decoration:none;white-space:nowrap;} .brand-mark{display:grid;place-items:center;width:40px;height:40px;background:var(--color-primary-container);color:var(--color-primary);font:var(--type-h4);flex-shrink:0;} .brand-text{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:var(--type-h4);} .nav-links{display:flex;align-items:center;gap:var(--space-2);min-width:0;flex-wrap:wrap;} .nav-link,.util-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-1);height:40px;min-width:40px;padding:0 var(--space-3);background:transparent;border:0;color:var(--color-on-surface);font:var(--type-body);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .15s,border-color .15s;flex-shrink:0;} .nav-link:hover,.util-btn:hover{background:var(--accent-hover);} .nav-link.active{background:var(--color-primary-container);color:var(--link);} .search-btn{background:var(--color-surface-container);color:var(--color-on-surface);min-width:120px;} .search-btn:hover{background:var(--accent-hover);} .util-group{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;}

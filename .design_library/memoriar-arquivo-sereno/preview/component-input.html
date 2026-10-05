@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+body { margin: 0; padding: 12px; background: var(--color-surface); font: var(--type-body); color: var(--color-on-surface); }
+.specimen { display: flex; flex-direction: column; gap: var(--space-3); }
+.story { display: grid; grid-template-columns: 92px minmax(0,1fr); gap: var(--space-3); align-items: start; }
+.rail { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; min-width: 0; }
+.story-label { padding-top: var(--space-2); color: var(--color-muted-foreground); font: var(--type-caption); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.divider { width: 100%; margin: 0; border: 0; border-top: 1px solid var(--color-outline-variant); }
+/* @component-css-start */
+.field { display: flex; flex-direction: column; gap: var(--space-2); width: 248px; min-width: 0; overflow: hidden; flex-shrink: 0; }
+.field.is-compact { width: 216px; }
+.field-label { color: var(--color-on-surface); font: var(--type-caption); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.field-control { display: flex; align-items: center; gap: var(--space-2); height: var(--size-input-height); padding: 0 var(--space-3); border: 1px solid var(--color-outline); background: var(--surface-bright); color: var(--color-on-surface); transition: background .15s,border-color .15s; }
+.field.is-compact .field-control { height: var(--size-button-height-sm); }
+.field-control:hover { border-color: var(--color-primary); background: var(--color-surface-container-low); }
+.field:focus-within .field-control { border-color: var(--color-primary); outline: 2px solid var(--ring); outline-offset: 2px; }
+.field-control i { width: var(--size-icon-sm); height: var(--size-icon-sm); color: var(--color-muted-foreground); flex-shrink: 0; }
+.field-control input { width: 100%; min-width: 0; border: 0; background: transparent; color: inherit; font: var(--type-body); outline: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.field-control input::placeholder { color: var(--color-muted-foreground); }
+.field-help { color: var(--color-muted-foreground); font: var(--type-caption); overflow-wrap: break-word; }
+.field.is-error .field-control { border-color: var(--color-error); background: var(--color-error-container); color: var(--color-on-error-container); }
+.field.is-error .field-help { color: var(--color-error); }
+.field.is-disabled .field-control { border-color: var(--color-outline-variant); background: var(--color-surface-container); color: var(--color-muted-foreground); }
+.field.is-disabled input { color: var(--color-muted-foreground); cursor: not-allowed; }
+/* @component-css-end */
+</style>
+</head>
+<body>
+<div class="specimen">
+<div class="story" data-evidence-sample="Input">
+<div class="story-label">Busca</div>
+<div class="rail">
+<label class="field" data-evidence-sample="search-default">
+<span class="field-label">Nome do falecido</span>
+<span class="field-control">
+<i data-lucide="search" aria-hidden="true"></i>
+<input type="search" placeholder="Nome do falecido">
+</span>
+<span class="field-help">Pesquise por nome ou referência pública.</span>
+</label>
+</div>
+</div>
+<hr class="divider">
+<div class="story" data-evidence-sample="Input">
+<div class="story-label">Cadastro</div>
+<div class="rail">
+<label class="field" data-evidence-sample="reference-default">
+<span class="field-label">Referência pública</span>
+<span class="field-control"><input type="text" value="MEM-0001"></span>
+<span class="field-help">Identificador exibido no memorial.</span>
+</label>
+<label class="field is-error" data-evidence-sample="reference-default">
+<span class="field-label">Referência pública</span>
+<span class="field-control"><input type="text" value="MEM-0001"></span>
+<span class="field-help">Confira a referência antes de publicar.</span>
+</label>
+<label class="field is-disabled" data-evidence-sample="reference-default">
+<span class="field-label">Referência pública</span>
+<span class="field-control"><input type="text" value="MEM-0001" disabled></span>
+<span class="field-help">Campo bloqueado após publicação.</span>
+</label>
+<label class="field is-compact" data-evidence-sample="password-default">
+<span class="field-label">Senha administrativa</span>
+<span class="field-control"><input type="password" value="Memoriar2026"></span>
+<span class="field-help">Use suas credenciais administrativas.</span>
+</label>
+</div>
+</div>
+</div>
+<script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

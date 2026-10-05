@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../colors_and_type.css">
+  <link rel="stylesheet" href="../../components.css">
+  <title>Memoriar UI Kit — Dashboard</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/lucide@1.8.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --uikit-sidebar-w: 260px;
+      --uikit-max-copy: 54ch;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; background: var(--background); color: var(--foreground); font-family: var(--font-body); }
+    body { min-height: 100vh; }
+    #root { min-height: 100vh; }
+    button, input { font: inherit; }
+
+    .uikit-shell{width:100%;max-width:1184px;margin:0 auto;overflow:hidden;display:grid;grid-template-columns:var(--uikit-sidebar-w, 220px) minmax(0,1fr);gap:var(--space-4);padding:var(--space-5)}
+    .uikit-sidebar,.uikit-main,.uikit-toolbar{min-width:0}
+    .uikit-sidebar{overflow:hidden;max-width:100%}
+    [data-component]{min-width:0;max-width:100%;overflow:hidden}
+    .uikit-toolbar{display:flex;align-items:center;gap:var(--space-2)}
+    .uikit-responsive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+    .uikit-table-wrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+    .uikit-truncate{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .uikit-nowrap{white-space:nowrap;flex-shrink:0}
+    .uikit-action-cell{display:flex;align-items:center;gap:8px;min-width:0;max-width:160px;overflow:hidden}
+    .uikit-action{min-width:0;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+    .uikit-rail {
+      min-height: calc(100vh - var(--space-8));
+      display: grid;
+      align-content: start;
+      gap: var(--space-5);
+      padding: var(--space-5);
+      background: var(--surface-container-low);
+    }
+
+    .uikit-brand-block,
+    .uikit-note-block,
+    .uikit-footer {
+      display: grid;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+
+    .uikit-brand-mark {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      background: var(--color-primary-container);
+      color: var(--color-primary);
+      font: var(--type-h3);
+      font-family: var(--font-heading);
+    }
+
+    .uikit-brand-title,
+    .uikit-screen-title,
+    .uikit-panel-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      color: var(--foreground);
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    .uikit-brand-title { font: var(--type-h2); }
+    .uikit-screen-title { font: var(--type-h1); max-width: 18ch; }
+    .uikit-panel-title { font: var(--type-h3); }
+
+    .uikit-copy,
+    .uikit-foot,
+    .uikit-microcopy {
+      margin: 0;
+      color: var(--muted-foreground);
+      font: var(--type-body);
+    }
+
+    .uikit-foot,
+    .uikit-microcopy { font: var(--type-caption); }
+
+    .uikit-view-switch {
+      display: grid;
+      gap: var(--space-2);
+      min-width: 0;
+    }
+
+    .uikit-view-tab {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-4);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-bright);
+      color: var(--foreground);
+      cursor: pointer;
+      transition: background 160ms cubic-bezier(.2,.8,.2,1), border-color 160ms cubic-bezier(.2,.8,.2,1), color 160ms cubic-bezier(.2,.8,.2,1);
+      white-space: nowrap;
+    }
+
+    .uikit-view-tab.is-active {
+      background: var(--color-primary-container);
+      border-color: var(--color-primary);
+      color: var(--color-on-primary-container);
+    }
+
+    .uikit-screen {
+      display: grid;
+      gap: var(--space-5);
+      min-width: 0;
+      align-content: start;
+    }
+
+    .uikit-screen-header {
+      display: grid;
+      gap: var(--space-3);
+      min-width: 0;
+      padding: var(--space-5) 0 var(--space-2);
+    }
+
+    .uikit-header-meta,
+    .uikit-inline-meta,
+    .uikit-chipline {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .uikit-header-meta { justify-content: space-between; }
+
+    .uikit-stage-card,
+    .uikit-airy-grid,
+    .uikit-public-flow,
+    .uikit-admin-grid,
+    .uikit-modal-wrap {
+      display: grid;
+      gap: var(--space-4);
+      min-width: 0;
+    }
+
+    .uikit-stage-card {
+      padding: var(--space-5);
+      background: var(--surface);
+    }
+
+    .uikit-hero-grid,
+    .uikit-detail-grid {
+      display: grid;
+      grid-template-columns: minmax(0,1.15fr) minmax(300px,.85fr);
+      gap: var(--space-5);
+      min-width: 0;
+    }
+
+    .uikit-airy-grid {
+      grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+
+    .uikit-section-stack,
+    .uikit-card-stack,
+    .uikit-support-list,
+    .uikit-stack {
+      display: grid;
+      gap: var(--space-3);
+      min-width: 0;
+    }
+
+    .uikit-card-stack { gap: var(--space-4); }
+
+    .uikit-input-group,
+    .uikit-button-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .uikit-field-wide { width: min(100%, 420px); }
+
+    .uikit-note-block {
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .uikit-logical-map-shell {
+      padding: var(--space-5);
+      background: var(--surface-container-low);
+    }
+
+    .uikit-card-tile {
+      padding: var(--space-4);
+      background: var(--surface-container-low);
+    }
+
+    .uikit-card-tile .card-meta {
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .uikit-detail-grid {
+      align-items: start;
+    }
+
+    .uikit-public-flow {
+      grid-template-columns: minmax(0,1fr) minmax(0,360px);
+    }
+
+    .uikit-admin-grid {
+      grid-template-columns: var(--sidebar-width) minmax(0,1fr);
+      align-items: start;
+    }
+
+    .uikit-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4,minmax(0,1fr));
+      gap: var(--space-4);
+      min-width: 0;
+    }
+
+    .uikit-kpi-value {
+      margin: 0;
+      font: var(--type-h2);
+      font-family: var(--font-heading);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .uikit-kpi-card {
+      padding: var(--space-4);
+      background: var(--surface);
+    }
+
+    .uikit-admin-main {
+      display: grid;
+      gap: var(--space-4);
+      min-width: 0;
+    }
+
+    .uikit-modal-wrap {
+      grid-template-columns: minmax(0,1fr) minmax(320px,.8fr);
+      align-items: start;
+    }
+
+    .uikit-empty-block {
+      display: grid;
+      gap: var(--space-3);
+      padding: var(--space-5);
+      background: var(--surface-container-low);
+      min-width: 0;
+    }
+
+    .uikit-footer {
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .uikit-link-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .uikit-link-row a {
+      color: var(--link);
+      text-decoration: none;
+      font: var(--type-caption);
+      white-space: nowrap;
+    }
+
+    .icon-sm { width: 16px; height: 16px; display: inline-block; }
+    .icon-md { width: 20px; height: 20px; display: inline-block; }
+    .icon-lg { width: 24px; height: 24px; display: inline-block; }
+
+    @media (hover: none) {
+      .uikit-view-tab { transition-duration: 0.01ms; }
+    }
+
+    @media (max-width: 900px){.uikit-shell{grid-template-columns:minmax(0,1fr)}.uikit-responsive-grid{grid-template-columns:minmax(0,1fr)}
+      .uikit-hero-grid,
+      .uikit-detail-grid,
+      .uikit-public-flow,
+      .uikit-admin-grid,
+      .uikit-modal-wrap,
+      .uikit-kpi-grid,
+      .uikit-airy-grid { grid-template-columns:minmax(0,1fr); }
+    }
+
+    @media (max-width: 640px){.uikit-toolbar{flex-direction:column;align-items:stretch}.uikit-responsive-grid{grid-template-columns:minmax(0,1fr)}
+      .uikit-shell { padding: var(--space-4); }
+      .uikit-rail,
+      .uikit-stage-card,
+      .uikit-logical-map-shell,
+      .uikit-empty-block { padding: var(--space-4); }
+      .uikit-view-tab { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useEffect, useMemo, useState } = React;
+
+    const homeResults = [
+      {
+        name: "Maria de Lourdes Souza",
+        location: "Cemitério da Colina • Setor B • Quadra 3",
+        note: "Registro público consolidado com localização confirmada e caminho de visita já orientado.",
+        value: "Jazigo 18",
+        badgeClass: "badge soft success-soft",
+        badgeText: "Localizado",
+        meta: "Atualizado hoje"
+      },
+      {
+        name: "José Carlos de Almeida",
+        location: "Cemitério Memorial Norte • Alameda 2 • Quadra 7",
+        note: "Informações completas para visita, incluindo período, setor e conferência documental recente.",
+        value: "Jazigo 04",
+        badgeClass: "badge soft info-soft",
+        badgeText: "Publicado",
+        meta: "Revisado às 08h40"
+      },
+      {
+        name: "Helena Duarte Ribeiro",
+        location: "Jardim da Memória • Setor Bosque • Quadra 1",
+        note: "Percurso público disponível, com observação serena para conferência de identificação na portaria.",
+        value: "Jazigo 31",
+        badgeClass: "badge soft warning-soft",
+        badgeText: "Em revisão",
+        meta: "Apoio presencial recomendado"
+      }
+    ];
+
+    const detailFacts = [
+      { title: "Nascimento", value: "14 fev 1943", text: "Belo Horizonte, MG" },
+      { title: "Falecimento", value: "02 jun 2021", text: "Registro confirmado em 2026" },
+      { title: "Localização", value: "Setor B • Quadra 3", text: "Acesso pela Alameda Central" },
+      { title: "Referência", value: "MEM-1042", text: "Consulta pública liberada" }
+    ];
+
+    const adminMetrics = [
+      { title: "Casos publicados", value: "1.248", text: "Com publicação pública ativa e vínculo validado.", badgeClass: "badge soft info-soft", badgeText: "Fluxo estável" },
+      { title: "Pendências", value: "18", text: "Registros sem conferência final de localização.", badgeClass: "badge soft warning-soft", badgeText: "Atenção" },
+      { title: "Movimentações", value: "42", text: "Atualizações de hoje entre setores e equipes.", badgeClass: "badge soft success-soft", badgeText: "Operação" },
+      { title: "Solicitações", value: "27", text: "Pedidos públicos aguardando retorno institucional.", badgeClass: "badge outlined error-outlined", badgeText: "Fila ativa" }
+    ];
+
+    const adminRows = [
+      { ref: "MEM-1042", name: "Maria de Lourdes Souza", sector: "Setor B • Quadra 3 • Jazigo 18", statusClass: "badge soft success-soft", statusText: "Publicado", owner: "Equipe Norte", date: "30 jun 2026" },
+      { ref: "MEM-1078", name: "José Carlos de Almeida", sector: "Alameda 2 • Quadra 7 • Jazigo 04", statusClass: "badge soft warning-soft", statusText: "Em revisão", owner: "Cadastro Central", date: "29 jun 2026" },
+      { ref: "MEM-1089", name: "Helena Duarte Ribeiro", sector: "Bosque • Quadra 1 • Jazigo 31", statusClass: "badge outlined error-outlined", statusText: "Pendência", owner: "Qualidade dos dados", date: "29 jun 2026" },
+      { ref: "MEM-1097", name: "Pedro Nogueira Lima", sector: "Setor Leste • Quadra 5 • Jazigo 12", statusClass: "badge soft success-soft", statusText: "Publicado", owner: "Equipe Leste", date: "28 jun 2026" },
+      { ref: "MEM-1106", name: "Ana Célia Martins", sector: "Jardim Sul • Quadra 8 • Jazigo 02", statusClass: "badge soft warning-soft", statusText: "Em revisão", owner: "Documentação", date: "27 jun 2026" },
+      { ref: "MEM-1124", name: "Raimundo Ferreira Costa", sector: "Setor Histórico • Quadra 2 • Jazigo 09", statusClass: "badge soft info-soft", statusText: "Publicado", owner: "Equipe Patrimônio", date: "26 jun 2026" }
+    ];
+
+    function Icon({ name, size = "icon-md" }) {
+      return <i data-lucide={name} className={size} aria-hidden="true"></i>;
+    }
+
+    function NavTabs({ active, onChange }) {
+      const items = [
+        { id: "publico", label: "Busca pública" },
+        { id: "detalhe", label: "Camada de detalhe" },
+        { id: "admin", label: "Visão administrativa" }
+      ];
+
+      return (
+        <div className="uikit-view-switch" role="tablist" aria-label="Selecionar visão">
+          {items.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={active === item.id}
+              className={`uikit-view-tab ${active === item.id ? "is-active" : ""}`}
+              onClick={() => onChange(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      );
+    }
+
+    function Topnav({ active }) {
+      return (
+        <nav className="topnav" aria-label="Navegação principal" data-component="topnav">
+          <a className="brand" href="#memoriar">
+            <span className="brand-mark" aria-hidden="true">M</span>
+            <span className="brand-text">Memoriar</span>
+          </a>
+          <div className="nav-links">
+            <a className={`nav-link ${active === "consulta" ? "active" : ""}`} href="#consulta">Consulta pública</a>
+            <a className={`nav-link ${active === "mapa" ? "active" : ""}`} href="#mapa">Mapa lógico</a>
+            <a className={`nav-link ${active === "orientacoes" ? "active" : ""}`} href="#orientacoes">Orientações</a>
+          </div>
+          <a className="search-btn nav-link" href="#buscar">
+            <Icon name="search" size="icon-sm" />
+            <span className="uikit-truncate">Buscar falecido</span>
+          </a>
+          <div className="util-group">
+            <button type="button" className="util-btn" aria-label="Avisos">
+              <Icon name="bell" size="icon-sm" />
+            </button>
+            <button type="button" className="util-btn" aria-label="Ajuda">
+              <Icon name="help-circle" size="icon-sm" />
+            </button>
+          </div>
+        </nav>
+      );
+    }
+
+    function SearchField({ disabled = false, defaultValue = "", icon = "search", label = "Nome do falecido", helper = "Pesquise por nome, período ou referência pública." }) {
+      return (
+        <label className={`field uikit-field-wide ${disabled ? "is-disabled" : ""}`} data-component="input">
+          <span className="field-label">{label}</span>
+          <span className="field-control">
+            <Icon name={icon} size="icon-sm" />
+            <input type="search" placeholder="Nome, setor ou referência" defaultValue={defaultValue} disabled={disabled} />
+          </span>
+          <span className="field-help">{helper}</span>
+        </label>
+      );
+    }
+
+    function PublicHome() {
+      return (
+        <section className="uikit-screen" aria-labelledby="public-home-title">
+          <Topnav active="consulta" />
+          <header className="uikit-screen-header">
+            <h2 id="public-home-title" className="uikit-screen-title">Busca pública</h2>
+            <p className="uikit-copy">A experiência de entrada do Memoriar acolhe com calma, organiza a pesquisa em poucas decisões e transforma a visita em orientação clara.</p>
+          </header>
+
+          <div className="uikit-hero-grid">
+            <section className="uikit-stage-card">
+              <div className="uikit-section-stack">
+                <h3 className="uikit-panel-title">Buscar falecido</h3>
+                <p className="uikit-copy">Use nome, período ou referência pública para localizar um registro memorial sem ruído burocrático.</p>
+              </div>
+              <div className="uikit-input-group">
+                <SearchField defaultValue="Maria de Lourdes" />
+              </div>
+              <div className="uikit-button-row">
+                <button type="button" className="btn primary" data-component="button">Buscar falecido</button>
+                <button type="button" className="btn secondary" data-component="button">Ver localização</button>
+                <button type="button" className="btn ghost" data-component="button" disabled>Busca avançada</button>
+              </div>
+            </section>
+
+            <section className="uikit-stage-card">
+              <div className="uikit-section-stack">
+                <h3 className="uikit-panel-title">Orientação calma</h3>
+                <p className="uikit-copy">O primeiro contato prioriza leitura respirável, linguagem respeitosa e confirmação gradual das informações sensíveis.</p>
+              </div>
+              <div className="uikit-chipline" data-component="badge">
+                <span className="badge soft info-soft"><span className="tone-dot" aria-hidden="true"></span><span>Publicado</span></span>
+                <span className="badge soft success-soft"><span className="tone-dot" aria-hidden="true"></span><span>Localizado</span></span>
+                <span className="badge soft warning-soft"><span className="tone-dot" aria-hidden="true"></span><span>Em revisão</span></span>
+              </div>
+              <div className="uikit-note-block">
+                <p className="uikit-microcopy">12 cemitérios integrados • 96% das orientações devolvidas no mesmo dia útil • apoio presencial de 8h às 17h.</p>
+              </div>
+            </section>
+          </div>
+
+          <div className="uikit-airy-grid">
+            {homeResults.map((item) => (
+              <article key={item.name} className="card uikit-card-tile" data-component="card">
+                <div className="uikit-inline-meta">
+                  <span className={item.badgeClass} data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>{item.badgeText}</span></span>
+                </div>
+                <h3 className="card-title">{item.name}</h3>
+                <p className="card-supporting">{item.note}</p>
+                <strong className="card-value">{item.value}</strong>
+                <div className="card-meta">
+                  <span>{item.location}</span>
+                  <span>{item.meta}</span>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <section className="uikit-logical-map-shell">
+            <div className="map-showcase" data-component="logical-map">
+              <section className="map-panel" data-variant-id="public-wayfinding" data-context="public-wayfinding" data-state="selected">
+                <div className="panel-head">
+                  <div>
+                    <h3 className="panel-title">Mapa lógico</h3>
+                    <p className="panel-copy">A orientação espacial confirma setor, quadra e percurso antes da visita, sem linguagem técnica excessiva.</p>
+                  </div>
+                  <span className="status-pill">Localização confirmada</span>
+                </div>
+                <div className="map-frame">
+                  <div className="map-canvas">
+                    <div className="map-header">
+                      <h4 className="map-name">Cemitério da Colina</h4>
+                      <span className="map-scale">Entrada principal • 140 m</span>
+                    </div>
+                    <div className="cemetery-grid">
+                      <div className="sector">
+                        <span className="sector-name">Setor A</span>
+                        <span className="sector-meta">Alameda de chegada</span>
+                        <div className="sector-lines">
+                          <div className="sector-line"></div>
+                          <div className="sector-line"></div>
+                          <div className="sector-line"></div>
+                        </div>
+                      </div>
+                      <div className="sector selected">
+                        <span className="sector-name">Setor B</span>
+                        <span className="sector-meta">Quadra 3 selecionada</span>
+                        <div className="sector-lines">
+                          <div className="sector-line"></div>
+                          <div className="sector-line"></div>
+                          <div className="sector-line"></div>
+                        </div>
+                      </div>
+                      <div className="sector">
+                        <span className="sector-name">Setor C</span>
+                        <span className="sector-meta">Apoio memorial</span>
+                        <div className="sector-lines">
+                          <div className="sector-line"></div>
+                          <div className="sector-line"></div>
+                          <div className="sector-line"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="delta-panel">
+                    <div className="meta-block">
+                      <span className="meta-label">Percurso</span>
+                      <span className="meta-value">Portaria → Alameda Central → Setor B → Quadra 3</span>
+                    </div>
+                    <div className="legend">
+                      <div className="legend-row"><span className="legend-swatch is-selected"></span><span>Destino confirmado</span></div>
+                      <div className="legend-row"><span className="legend-swatch"></span><span>Áreas de apoio</span></div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </section>
+        </section>
+      );
+    }
+
+    function PublicDetail() {
+      return (
+        <section className="uikit-screen" aria-labelledby="public-detail-title">
+          <Topnav active="mapa" />
+          <header className="uikit-screen-header">
+            <h2 id="public-detail-title" className="uikit-screen-title">Camada de detalhe</h2>
+            <p className="uikit-copy">Quando a busca confirma um registro, a leitura lateral preserva contexto, organiza informações delicadas e evita a sensação de ruptura brusca.</p>
+          </header>
+
+          <div className="uikit-detail-grid">
+            <section className="drawer-scene drawer-scene--delta" data-component="drawer">
+              <div className="drawer-scene__content" aria-hidden="true">
+                <div>
+                  <h3 className="drawer-scene__headline">Maria de Lourdes Souza</h3>
+                  <p className="drawer-scene__supporting">Consulta pública confirmada com dados sensíveis apresentados em camadas curtas, sempre com foco em orientação.</p>
+                </div>
+                <div className="drawer-scene__grid">
+                  {detailFacts.slice(0, 4).map((fact) => (
+                    <div key={fact.title} className="drawer-scene__card">
+                      <strong>{fact.value}</strong>
+                      <span>{fact.title} • {fact.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="drawer-scrim"></div>
+              <aside className="drawer">
+                <div className="drawer__header">
+                  <h3 className="drawer__title">Detalhes do caso</h3>
+                  <div className="drawer__meta">
+                    <span className="drawer__badge">Consulta pública</span>
+                    <span>MEM-1042</span>
+                    <span>Atualizado hoje</span>
+                  </div>
+                </div>
+                <div className="drawer__body">
+                  <section className="drawer__section">
+                    <span className="drawer__label">Localização</span>
+                    <p className="drawer__text">Cemitério da Colina • Setor B • Quadra 3 • Jazigo 18.</p>
+                    <p className="drawer__support">Entrada pela portaria principal, seguir pela Alameda Central e observar a sinalização institucional à direita.</p>
+                  </section>
+                  <section className="drawer__section">
+                    <span className="drawer__label">Dados confirmados</span>
+                    <ul className="drawer__list">
+                      <li>
+                        <strong className="uikit-truncate">Nascimento</strong>
+                        <span className="drawer__support">14 fev 1943 • Belo Horizonte, MG</span>
+                      </li>
+                      <li>
+                        <strong className="uikit-truncate">Falecimento</strong>
+                        <span className="drawer__support">02 jun 2021 • publicação pública validada</span>
+                      </li>
+                    </ul>
+                  </section>
+                  <section className="drawer__section">
+                    <div className="drawer__callout">
+                      <span className="drawer__label">Apoio</span>
+                      <p className="drawer__text">Se desejar, a equipe presencial pode confirmar o percurso e orientar a chegada com a mesma referência pública desta consulta.</p>
+                    </div>
+                  </section>
+                </div>
+                <div className="drawer__actions">
+                  <a href="#voltar" className="drawer__button drawer__button--quiet">Fechar</a>
+                  <a href="#localizacao" className="drawer__button drawer__button--primary">Ver localização</a>
+                </div>
+              </aside>
+            </section>
+
+            <aside className="uikit-card-stack">
+              <article className="card uikit-card-tile" data-component="card">
+                <div className="uikit-chipline">
+                  <span className="badge soft info-soft" data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>Publicado</span></span>
+                  <span className="badge soft success-soft" data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>Localizado</span></span>
+                </div>
+                <h3 className="card-title">Registro sereno</h3>
+                <p className="card-supporting">As informações aparecem em sequência curta: identificação, localização e apoio institucional.</p>
+                <strong className="card-value">Consulta pública ativa</strong>
+                <div className="card-meta">
+                  <span>Leitura lateral preserva contexto</span>
+                  <span>Sem dramatização visual</span>
+                </div>
+              </article>
+
+              <SearchField
+                disabled={true}
+                icon="lock"
+                label="Complemento documental"
+                helper="Disponível apenas após conferência da equipe responsável."
+              />
+
+              <div className="uikit-empty-block">
+                <h3 className="uikit-panel-title">Leitura complementar</h3>
+                <p className="uikit-copy">A camada de detalhe mantém a mesma temperatura mineral da busca pública e expande apenas o necessário.</p>
+                <div className="uikit-button-row">
+                  <button type="button" className="btn secondary" data-component="button">Abrir orientações</button>
+                  <button type="button" className="btn ghost" data-component="button" disabled>Compartilhar referência</button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+      );
+    }
+
+    function AdminView() {
+      return (
+        <section className="uikit-screen" aria-labelledby="admin-title">
+          <header className="uikit-screen-header">
+            <h2 id="admin-title" className="uikit-screen-title">Visão administrativa</h2>
+            <p className="uikit-copy">A área administrativa adensa módulos, mantém a clareza editorial e organiza filtros, métricas, tabela operacional e confirmação modal em um único fluxo coerente.</p>
+          </header>
+
+          <div className="uikit-admin-grid">
+            <aside className="uikit-sidebar">
+              <nav className="sidebar" aria-label="Navegação principal" data-component="sidebar">
+                <div className="sidebar__body">
+                  <div className="sidebar__group">
+                    <div className="sidebar__section">Arquivo</div>
+                    <div className="sidebar__nav">
+                      <a className="sidebar__item sidebar__item--active" href="#visao-geral">
+                        <span className="sidebar__indicator" aria-hidden="true"></span>
+                        <Icon name="layout-dashboard" size="icon-sm" />
+                        <span className="uikit-truncate">Visão geral</span>
+                      </a>
+                      <a className="sidebar__item" href="#casos">
+                        <Icon name="folder-kanban" size="icon-sm" />
+                        <span className="uikit-truncate">Casos funerários</span>
+                      </a>
+                      <a className="sidebar__item" href="#movimentacoes">
+                        <Icon name="repeat-2" size="icon-sm" />
+                        <span className="uikit-truncate">Movimentações</span>
+                      </a>
+                      <a className="sidebar__item" href="#qualidade">
+                        <Icon name="shield-check" size="icon-sm" />
+                        <span className="uikit-truncate">Qualidade dos dados</span>
+                      </a>
+                    </div>
+                  </div>
+                  <div className="sidebar__group">
+                    <div className="sidebar__section">Território</div>
+                    <div className="sidebar__nav">
+                      <a className="sidebar__item" href="#cemiterios">
+                        <Icon name="map" size="icon-sm" />
+                        <span className="uikit-truncate">Cemitérios</span>
+                      </a>
+                      <a className="sidebar__item" href="#setores">
+                        <Icon name="grid-2x2" size="icon-sm" />
+                        <span className="uikit-truncate">Setores</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div className="sidebar__footer">Atualizado às 09h30 • operação diária</div>
+              </nav>
+            </aside>
+
+            <main className="uikit-admin-main">
+              <section className="uikit-stage-card">
+                <div className="uikit-header-meta">
+                  <div className="uikit-section-stack">
+                    <h3 className="uikit-panel-title">Casos funerários</h3>
+                    <p className="uikit-copy">Filtros objetivos, nomenclatura direta e apoio visual contido para reduzir ambiguidade operacional.</p>
+                  </div>
+                  <div className="uikit-chipline">
+                    <span className="badge soft info-soft" data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>Painel diário</span></span>
+                    <span className="badge soft success-soft" data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>Atualizado</span></span>
+                  </div>
+                </div>
+                <div className="uikit-responsive-grid">
+                  <SearchField label="Buscar caso" helper="Nome, referência pública ou setor." defaultValue="MEM-10" />
+                  <SearchField label="Equipe responsável" helper="Filtre por grupo de atendimento." defaultValue="Cadastro Central" icon="users" />
+                </div>
+                <div className="uikit-button-row">
+                  <button type="button" className="btn secondary" data-component="button">Aplicar filtros</button>
+                  <button type="button" className="btn ghost" data-component="button">Exportar relatório</button>
+                  <button type="button" className="btn secondary" data-component="button" disabled>Nova revisão</button>
+                </div>
+              </section>
+
+              <div className="uikit-kpi-grid">
+                {adminMetrics.map((metric) => (
+                  <article key={metric.title} className="card card-metric uikit-kpi-card" data-component="card">
+                    <h3 className="card-title">{metric.title}</h3>
+                    <p className="uikit-kpi-value">{metric.value}</p>
+                    <p className="card-supporting">{metric.text}</p>
+                    <div className="card-meta">
+                      <span className={metric.badgeClass} data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>{metric.badgeText}</span></span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <section className="uikit-modal-wrap">
+                <section className="table-card" data-component="table">
+                  <div className="table-toolbar">
+                    <div className="uikit-stack">
+                      <div className="table-title">Casos funerários</div>
+                      <div className="table-meta">6 registros visíveis • uma ação textual por linha</div>
+                    </div>
+                    <div className="uikit-chipline">
+                      <span className="badge soft success-soft" data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>Fluxo diário</span></span>
+                    </div>
+                  </div>
+                  <div className="table-filters">
+                    <span className="filter-chip">Hoje</span>
+                    <span className="filter-chip">Cadastro Central</span>
+                    <span className="filter-chip">Pendências</span>
+                  </div>
+                  <div className="uikit-table-wrap">
+                    <div className="table-shell">
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th className="uikit-nowrap">Referência</th>
+                            <th className="uikit-nowrap">Nome</th>
+                            <th className="uikit-nowrap">Localização</th>
+                            <th className="uikit-nowrap">Status</th>
+                            <th className="uikit-nowrap">Responsável</th>
+                            <th className="uikit-nowrap">Atualização</th>
+                            <th className="uikit-nowrap">Ações</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {adminRows.map((row, index) => (
+                            <tr key={row.ref}>
+                              <td className="uikit-nowrap">{row.ref}</td>
+                              <td className="uikit-truncate">{row.name}</td>
+                              <td className="uikit-truncate">{row.sector}</td>
+                              <td><span className={row.statusClass} data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>{row.statusText}</span></span></td>
+                              <td className="uikit-truncate">{row.owner}</td>
+                              <td className="uikit-nowrap">{row.date}</td>
+                              <td>
+                                <div className="uikit-action-cell">
+                                  <button type="button" className="btn ghost uikit-action" data-component="button">Ver</button>
+                                  <button type="button" className="btn ghost" data-component="button" aria-label={`Mais ações para ${row.ref}`}>
+                                    <Icon name="more-horizontal" size="icon-sm" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className="pagination">
+                    <span>Mostrando 1–6 de 18</span>
+                    <span>Atualização contínua</span>
+                  </div>
+                </section>
+
+                <div className="uikit-card-stack">
+                  <article className="card card-status" data-component="card">
+                    <h3 className="card-title">Qualidade dos dados</h3>
+                    <p className="card-supporting">Sete registros aguardam confirmação de quadra e cinco ainda precisam de referência pública revisada.</p>
+                    <strong className="card-value">18 pendências</strong>
+                    <div className="card-meta">
+                      <span className="badge soft warning-soft" data-component="badge"><span className="tone-dot" aria-hidden="true"></span><span>Em revisão</span></span>
+                      <span>Prioridade da manhã</span>
+                    </div>
+                  </article>
+
+                  <section className="scene" data-component="modal">
+                    <div className="scrim">
+                      <div className="modal warning">
+                        <div className="modal-header">
+                          <h3 className="title">Confirmar publicação</h3>
+                        </div>
+                        <div className="body">
+                          <p className="message">O registro MEM-1078 recebeu conferência documental final. Ao publicar, a busca pública passará a exibir a nova localização e a referência atualizada.</p>
+                        </div>
+                        <div className="actions">
+                          <button type="button" className="button">Cancelar</button>
+                          <button type="button" className="button primary">Confirmar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </section>
+            </main>
+          </div>
+        </section>
+      );
+    }
+
+    function App() {
+      const [activeView, setActiveView] = useState("publico");
+
+      useEffect(() => {
+        if (window.lucide) {
+          window.lucide.createIcons();
+        }
+      }, [activeView]);
+
+      const screen = useMemo(() => {
+        if (activeView === "detalhe") return <PublicDetail />;
+        if (activeView === "admin") return <AdminView />;
+        return <PublicHome />;
+      }, [activeView]);
+
+      return (
+        <div className="uikit-shell" data-layout-guard="uikit-v1" style={{ "--uikit-sidebar-w": "260px" }}>
+          <aside className="uikit-sidebar">
+            <div className="uikit-rail">
+              <section className="uikit-brand-block" id="memoriar">
+                <div className="uikit-brand-mark" aria-hidden="true">M</div>
+                <h1 className="uikit-brand-title">Memoriar</h1>
+                <p className="uikit-copy">Plataforma cívica de memória com busca pública respeitosa, orientação espacial clara e operação administrativa guiada por dados.</p>
+              </section>
+
+              <NavTabs active={activeView} onChange={setActiveView} />
+
+              <section className="uikit-note-block">
+                <h2 className="uikit-panel-title">Arquivo Sereno</h2>
+                <p className="uikit-copy">Azul-petróleo, superfícies minerais, títulos em Spectral e corpo em Inter sustentam uma presença calma, digna e confiável.</p>
+                <p className="uikit-foot">Amostra com três visões coerentes: busca pública, detalhe sensível e administração estruturada.</p>
+              </section>
+
+              <footer className="uikit-footer">
+                <p className="uikit-foot">© 2026 Memoriar</p>
+                <div className="uikit-link-row">
+                  <a href="#orientacoes">Orientações</a>
+                  <a href="#privacidade">Privacidade</a>
+                  <a href="#contato">Contato</a>
+                </div>
+              </footer>
+            </div>
+          </aside>
+
+          <main className="uikit-main">
+            {screen}
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+  <script>window.lucide && window.lucide.createIcons();</script>
+</body>
+</html>

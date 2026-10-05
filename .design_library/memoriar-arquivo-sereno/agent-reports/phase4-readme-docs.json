@@ -1,0 +1,10 @@
+{
+  "writtenFiles": [
+    "README.md"
+  ],
+  "warnings": [
+    "Os componentes foram inferidos a partir do briefing textual do produto e servem como base inicial para expansão posterior do sistema.",
+    "Fonte Figma, contagem de páginas e quotes de designer não foram fornecidos no pacote; o README registra essas lacunas explicitamente.",
+    "O arquivo colors_and_type.css marca muitos tokens como 'AI-generated'; o README trata esses valores como fonte operacional vigente, não como prova de origem histórica."
+  ]
+}
