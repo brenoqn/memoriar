@@ -1,6 +1,6 @@
 import pg from 'pg';
 
-import { env } from '../core/config/env.js';
+import { readDatabaseEnv } from '../core/config/databaseEnv.js';
 
 // Datas (date) chegam como texto 'YYYY-MM-DD', no mesmo formato que o contrato público já usa,
 // em vez de virar Date com fuso horário aplicado.
@@ -14,9 +14,10 @@ let pool: pg.Pool | null = null;
 
 export function getPool(): pg.Pool {
   if (!pool) {
+    const config = readDatabaseEnv();
     pool = new pg.Pool({
-      connectionString: env.DATABASE_URL,
-      max: env.DATABASE_POOL_MAX,
+      connectionString: config.DATABASE_URL,
+      max: config.DATABASE_POOL_MAX,
       connectionTimeoutMillis: 5_000,
       idleTimeoutMillis: 30_000,
       application_name: 'memoriar-api'
