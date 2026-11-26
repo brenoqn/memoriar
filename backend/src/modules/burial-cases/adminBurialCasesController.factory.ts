@@ -1,12 +1,8 @@
+import { getPool } from '../../db/pool.js';
 import { AdminBurialCasesController } from './adminBurialCases.controller.js';
 import { AdminBurialCasesUseCase } from './adminBurialCases.usecase.js';
-import { MockAdminBurialCasesRepository } from './repositories/mockAdminBurialCases.repository.js';
-import { SupabaseAdminBurialCasesRepository } from './repositories/supabaseAdminBurialCases.repository.js';
+import { PgAdminBurialCasesRepository } from './repositories/pgAdminBurialCases.repository.js';
 
 export function getAdminBurialCasesController() {
-  const repo =
-    process.env.USE_MOCKS === 'true'
-      ? new MockAdminBurialCasesRepository()
-      : new SupabaseAdminBurialCasesRepository();
-  return new AdminBurialCasesController(new AdminBurialCasesUseCase(repo));
+  return new AdminBurialCasesController(new AdminBurialCasesUseCase(new PgAdminBurialCasesRepository(getPool())));
 }

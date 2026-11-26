@@ -4,14 +4,25 @@ import type {
   AdminOperationFlowValidationError
 } from '@memoriar/shared';
 
-import { MOCK_ADMIN_BURIAL_LOCATIONS } from '../../mocks/adminData.mock.js';
-
 export type AdminOperationFlowPreviewResult =
   | { kind: 'ok'; preview: AdminOperationFlowPreview }
   | { kind: 'invalid'; errors: AdminOperationFlowValidationError[] };
 
+export type OperationFlowLocationSummary = {
+  code: string;
+  sector_code: string | null;
+  quadra_code: string | null;
+  map_node_id: string | null;
+};
+
+export interface AdminOperationFlowRepository {
+  findLocationSummary(locationId: string): Promise<OperationFlowLocationSummary | null>;
+}
+
 export class AdminOperationFlowUseCase {
-  preview(payload: AdminOperationFlowPayload): AdminOperationFlowPreviewResult {
+  constructor(private readonly repo: AdminOperationFlowRepository) {}
+
+  async preview(payload: AdminOperationFlowPayload): Promise<AdminOperationFlowPreviewResult> {
     const errors: AdminOperationFlowValidationError[] = [];
 
     const hasLocation =
@@ -116,13 +127,23 @@ export class AdminOperationFlowUseCase {
     let map_node_id: string | null = null;
 
     if (payload.location.mode === 'existing' && payload.location.existing_location_id) {
-      const loc =
-        MOCK_ADMIN_BURIAL_LOCATIONS.find((l) => l.id === payload.location.existing_location_id) ||
-        null;
-      location_code = loc?.code || null;
-      sector_code = loc?.sector_code || null;
-      quadra_code = loc?.quadra_code || null;
-      map_node_id = loc?.map_node_id || null;
+      const loc = await this.repo.findLocationSummary(payload.location.existing_location_id);
+      if (!loc) {
+        return {
+          kind: 'invalid',
+          errors: [
+            {
+              code: 'location_not_found',
+              message: 'O local selecionado não foi encontrado no cadastro.',
+              field: 'location.existing_location_id'
+            }
+          ]
+        };
+      }
+      location_code = loc.code;
+      sector_code = loc.sector_code;
+      quadra_code = loc.quadra_code;
+      map_node_id = loc.map_node_id;
     }
 
     if (payload.location.mode === 'new' && payload.location.new_location) {
@@ -131,7 +152,7 @@ export class AdminOperationFlowUseCase {
     }
 
     if (payload.location.mode === 'not_confirmed') {
-      warnings.push('Caso criado sem localização confirmada (modo demonstrativo).');
+      warnings.push('O caso será registrado sem localização confirmada.');
     }
 
     const ordered = [...payload.movements].sort((a, b) => {

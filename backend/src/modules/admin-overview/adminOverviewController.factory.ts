@@ -1,12 +1,8 @@
+import { getPool } from '../../db/pool.js';
 import { AdminOverviewController } from './adminOverview.controller.js';
 import { AdminOverviewUseCase } from './adminOverview.usecase.js';
-import { MockAdminOverviewRepository } from './repositories/mockAdminOverview.repository.js';
-import { SupabaseAdminOverviewRepository } from './repositories/supabaseAdminOverview.repository.js';
+import { PgAdminOverviewRepository } from './repositories/pgAdminOverview.repository.js';
 
 export function getAdminOverviewController() {
-  const repo =
-    process.env.USE_MOCKS === 'true'
-      ? new MockAdminOverviewRepository()
-      : new SupabaseAdminOverviewRepository();
-  return new AdminOverviewController(new AdminOverviewUseCase(repo));
+  return new AdminOverviewController(new AdminOverviewUseCase(new PgAdminOverviewRepository(getPool())));
 }

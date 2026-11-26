@@ -1,3 +1,5 @@
+# Referência versionada do deploy BQTECH. O compose operacional do servidor pode divergir;
+# compare os dois antes de qualquer mudança (ver docs/BQTECH-DEPLOYMENT.md).
 services:
   memoriar-web:
     image: ghcr.io/brenoqn/memoriar-web:latest
@@ -10,16 +12,29 @@ services:
       - bqtech-proxy
       - memoriar
 
+  # Aplica migrations pendentes a cada release e termina. Não aplica o seed demonstrativo.
+  memoriar-migrate:
+    image: ghcr.io/brenoqn/memoriar-api:latest
+    container_name: bqtech-memoriar-migrate
+    restart: "no"
+    command: ["node", "dist/db/cli.js", "migrate"]
+    environment:
+      DATABASE_URL: "${DATABASE_URL:?DATABASE_URL is required}"
+    networks:
+      - bqtech-data
+
   memoriar-api:
     image: ghcr.io/brenoqn/memoriar-api:latest
     container_name: bqtech-memoriar-api
     restart: unless-stopped
+    depends_on:
+      memoriar-migrate:
+        condition: service_completed_successfully
     environment:
       PORT: "3001"
       FRONTEND_ORIGIN: "${FRONTEND_ORIGIN:?FRONTEND_ORIGIN is required}"
-      USE_MOCKS: "false"
-      SUPABASE_URL: "${SUPABASE_URL:?SUPABASE_URL is required}"
-      SUPABASE_ANON_KEY: "${SUPABASE_ANON_KEY:?SUPABASE_ANON_KEY is required}"
+      DATABASE_URL: "${DATABASE_URL:?DATABASE_URL is required}"
+      JWT_SECRET: "${JWT_SECRET:?JWT_SECRET is required}"
     expose:
       - "3001"
     healthcheck:
@@ -38,9 +53,13 @@ services:
       start_period: 10s
     networks:
       - memoriar
+      # Rede do bqtech-postgres (container compartilhado da VM bqtech-app01).
+      - bqtech-data
 
 networks:
   bqtech-proxy:
+    external: true
+  bqtech-data:
     external: true
   memoriar:
     internal: true

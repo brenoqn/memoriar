@@ -58,7 +58,7 @@ export class AdminOperationFlowController {
       return;
     }
 
-    const result = this.useCase.preview(parsed.data);
+    const result = await this.useCase.preview(parsed.data);
     if (result.kind === 'invalid') {
       res.status(422).json({
         error: 'validation_failed',

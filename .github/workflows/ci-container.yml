@@ -17,6 +17,20 @@ jobs:
   validate:
     name: Validate shared, backend and frontend
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: memoriar_test
+          POSTGRES_USER: memoriar_user
+          POSTGRES_PASSWORD: memoriar_ci_only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U memoriar_user -d memoriar_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - name: Check out repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
@@ -56,6 +70,8 @@ jobs:
 
       - name: Test backend
         working-directory: backend
+        env:
+          TEST_DATABASE_URL: postgresql://memoriar_user:memoriar_ci_only@localhost:5432/memoriar_test
         run: npm test
 
       - name: Build backend

@@ -59,10 +59,6 @@ export class AdminLoginPageComponent {
               this.error.set('Usuário sem permissão administrativa.');
               return;
             }
-            if (err.status === 503 && err.error?.kind === 'supabase_not_configured') {
-              this.error.set('Supabase não configurado no backend.');
-              return;
-            }
           }
           this.error.set('Não foi possível acessar agora.');
         }
