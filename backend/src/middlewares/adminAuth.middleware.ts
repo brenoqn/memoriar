@@ -1,49 +1,39 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import {
-  createSupabaseAnonClient,
-  createSupabaseAuthedClient
-} from '../integrations/supabase/supabaseClientFactory.js';
+import { getPool } from '../db/pool.js';
+import { ADMIN_AREA_ROLES } from '../modules/auth/adminAuth.usecase.js';
+import { findActiveUserRole } from '../modules/auth/repositories/pgAuth.repository.js';
+import { verifyAccessToken } from '../modules/auth/token.js';
 
-export type AuthedRequest = Request & { accessToken: string; userId: string; roleKey?: string };
+export type AuthedRequest = Request & { userId: string; roleKey: string };
 
 export async function requireAdminAuth(req: Request, res: Response, next: NextFunction) {
   const header = req.header('authorization') || '';
-  const token = header.startsWith('Bearer ') ? header.slice('Bearer '.length) : '';
+  const token = header.startsWith('Bearer ') ? header.slice('Bearer '.length).trim() : '';
 
   if (!token) {
     res.status(401).json({ error: 'missing_token' });
     return;
   }
 
-  if (process.env.USE_MOCKS === 'true') {
-    (req as AuthedRequest).accessToken = token;
-    (req as AuthedRequest).userId = '00000000-0000-0000-0000-000000000001';
-    next();
+  const userId = await verifyAccessToken(token);
+  if (!userId) {
+    res.status(401).json({ error: 'invalid_token' });
     return;
   }
 
   try {
-    const supabase = createSupabaseAnonClient();
-    const { data, error } = await supabase.auth.getUser(token);
-    if (error || !data.user?.id) {
-      res.status(401).json({ error: 'invalid_token' });
-      return;
-    }
-
-    (req as AuthedRequest).accessToken = token;
-    (req as AuthedRequest).userId = data.user.id;
-
-    const supabaseAuthed = createSupabaseAuthedClient(token);
-    const { data: roleKey, error: roleError } = await supabaseAuthed.rpc('current_role_key');
-    if (roleError || (roleKey !== 'admin' && roleKey !== 'editor')) {
+    // O papel é lido do banco a cada requisição: desativar um usuário tem efeito imediato.
+    const roleKey = await findActiveUserRole(getPool(), userId);
+    if (!roleKey || !(ADMIN_AREA_ROLES as readonly string[]).includes(roleKey)) {
       res.status(403).json({ error: 'forbidden' });
       return;
     }
 
+    (req as AuthedRequest).userId = userId;
     (req as AuthedRequest).roleKey = roleKey;
     next();
-  } catch {
-    res.status(500).json({ error: 'auth_error' });
+  } catch (err) {
+    next(err);
   }
 }

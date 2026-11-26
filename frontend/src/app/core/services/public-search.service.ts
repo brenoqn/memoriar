@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, of, throwError, type Observable } from 'rxjs';
+import { map, type Observable } from 'rxjs';
 import type { PublicDeceasedDetail, PublicDeceasedSearchItem } from '@memoriar/shared';
 
 import { APP_CONFIG } from '../config/app-config';
-import { mockPublicDetail, mockPublicSearch } from '../../mocks/public.mock';
 
 @Injectable({ providedIn: 'root' })
 export class PublicSearchService {
@@ -23,10 +22,6 @@ export class PublicSearchService {
           if (Array.isArray(r)) return r;
           if (r && Array.isArray(r.items)) return r.items;
           throw new Error('Resposta inesperada na busca pública.');
-        }),
-        catchError((err) => {
-          if (!APP_CONFIG.allowMockFallback) return throwError(() => err);
-          return of(mockPublicSearch(q, cemeteryId));
         })
       );
   }
@@ -44,10 +39,6 @@ export class PublicSearchService {
           }
           if (r && typeof r === 'object') return r as PublicDeceasedDetail;
           throw new Error('Resposta inesperada no detalhe público.');
-        }),
-        catchError((err) => {
-          if (!APP_CONFIG.allowMockFallback) return throwError(() => err);
-          return of(mockPublicDetail(burialCaseId));
         })
       );
   }

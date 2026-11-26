@@ -1,16 +1,20 @@
 import request from 'supertest';
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 
 import type { AdminOperationFlowPayload } from '@memoriar/shared';
 
-import { createApp } from '../src/core/http/app';
+import { app, IDS, loginAs } from './helpers';
 
-const token = 'mock-admin-access-token';
+let token = '';
+
+beforeAll(async () => {
+  token = await loginAs('admin');
+});
 
 const basePayload: AdminOperationFlowPayload = {
   location: {
     mode: 'existing',
-    existing_location_id: '3e7c2f22-53c7-4c91-8cda-12b8a3c9a1d8',
+    existing_location_id: IDS.locationQ1JZ12,
     new_location: null
   },
   burial_case: {
@@ -32,10 +36,8 @@ const basePayload: AdminOperationFlowPayload = {
   ]
 };
 
-describe('admin operation flow preview (mock)', () => {
+describe('admin operation flow preview', () => {
   it('returns preview for valid payload', async () => {
-    process.env.USE_MOCKS = 'true';
-    const app = createApp();
     const res = await request(app)
       .post('/api/admin/operation-flow/preview')
       .set('authorization', `Bearer ${token}`)
@@ -43,11 +45,30 @@ describe('admin operation flow preview (mock)', () => {
 
     expect(res.status).toBe(200);
     expect(res.body.preview?.burial_case_summary?.deceased_name).toBe('Maria Aparecida de Souza');
+    expect(res.body.preview.location_summary).toEqual({
+      mode: 'existing',
+      location_code: 'Q1-JZ-12',
+      sector_code: 'S1',
+      quadra_code: 'Q1',
+      map_node_id: '3b8dbd69-e31a-4d29-9256-4c5c0d9e9b51'
+    });
+  });
+
+  it('rejects an existing location that is not registered', async () => {
+    const payload: AdminOperationFlowPayload = {
+      ...basePayload,
+      location: { ...basePayload.location, existing_location_id: '00000000-0000-4000-8000-000000000000' }
+    };
+    const res = await request(app)
+      .post('/api/admin/operation-flow/preview')
+      .set('authorization', `Bearer ${token}`)
+      .send(payload);
+
+    expect(res.status).toBe(422);
+    expect(res.body.errors[0].code).toBe('location_not_found');
   });
 
   it('rejects payload without deceased name', async () => {
-    process.env.USE_MOCKS = 'true';
-    const app = createApp();
     const payload: AdminOperationFlowPayload = {
       ...basePayload,
       burial_case: { ...basePayload.burial_case, deceased_name: '' }
@@ -61,8 +82,6 @@ describe('admin operation flow preview (mock)', () => {
   });
 
   it('rejects payload without movement date', async () => {
-    process.env.USE_MOCKS = 'true';
-    const app = createApp();
     const payload: AdminOperationFlowPayload = {
       ...basePayload,
       movements: [{ ...basePayload.movements[0]!, occurred_on: '' }]
@@ -76,8 +95,6 @@ describe('admin operation flow preview (mock)', () => {
   });
 
   it('supports multiple movements ordered by date and infers current location from last confirmed', async () => {
-    process.env.USE_MOCKS = 'true';
-    const app = createApp();
     const payload: AdminOperationFlowPayload = {
       ...basePayload,
       movements: [
@@ -122,8 +139,6 @@ describe('admin operation flow preview (mock)', () => {
   });
 
   it('rejects when movements list is empty', async () => {
-    process.env.USE_MOCKS = 'true';
-    const app = createApp();
     const payload: AdminOperationFlowPayload = { ...basePayload, movements: [] };
     const res = await request(app)
       .post('/api/admin/operation-flow/preview')

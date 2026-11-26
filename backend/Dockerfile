@@ -21,6 +21,8 @@ WORKDIR /workspace/backend
 
 COPY --from=build /workspace/backend/package.json ./package.json
 COPY --from=build /workspace/backend/dist ./dist
+# Migrations e seed SQL, usados por `node dist/db/cli.js migrate|seed|create-admin`.
+COPY --from=build /workspace/backend/db ./db
 COPY --from=build /workspace/backend/node_modules ./node_modules
 COPY --from=build /workspace/shared/package.json ../shared/package.json
 COPY --from=build /workspace/shared/dist ../shared/dist

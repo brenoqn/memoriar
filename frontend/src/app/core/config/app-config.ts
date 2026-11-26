@@ -1,4 +1,3 @@
 export const APP_CONFIG = {
-  apiBaseUrl: '/api',
-  allowMockFallback: false
+  apiBaseUrl: '/api'
 } as const;

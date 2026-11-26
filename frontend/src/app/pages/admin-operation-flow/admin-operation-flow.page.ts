@@ -13,7 +13,6 @@ import type {
 
 import { AdminBurialLocationsService } from '../../core/services/admin-burial-locations.service';
 import { AdminOperationFlowService } from '../../core/services/admin-operation-flow.service';
-import { mockAdminBurialLocations, mockAdminCemeteries, mockAdminQuadras, mockAdminSectors } from '../../mocks/admin.mock';
 
 type Step = 1 | 2 | 3 | 4;
 
@@ -124,16 +123,14 @@ export class AdminOperationFlowPageComponent {
           this.movementForm.controls.to_location_code.setValue(first.code);
         }
 
-        const cem = mockAdminCemeteries()[0];
-        const s1 = mockAdminSectors()[0];
-        const q1 = mockAdminQuadras()[0];
-        if (cem?.id) this.locationForm.controls.new_cemetery_id.setValue(cem.id);
-        if (s1?.id) this.locationForm.controls.new_sector_id.setValue(s1.id);
-        if (q1?.id) this.locationForm.controls.new_quadra_id.setValue(q1.id);
+        // Sugere cemitério/setor/quadra do primeiro local cadastrado para o modo "novo local".
+        if (first?.cemetery_id) this.locationForm.controls.new_cemetery_id.setValue(first.cemetery_id);
+        if (first?.sector_id) this.locationForm.controls.new_sector_id.setValue(first.sector_id);
+        if (first?.quadra_id) this.locationForm.controls.new_quadra_id.setValue(first.quadra_id);
       },
       error: () => {
-        const fallback = mockAdminBurialLocations();
-        this.locations.set(fallback);
+        this.locations.set([]);
+        this.uiFeedback.set('Não foi possível carregar os locais cadastrados. Tente novamente em instantes.');
       }
     });
 

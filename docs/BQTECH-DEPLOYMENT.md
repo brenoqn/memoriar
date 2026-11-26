@@ -15,7 +15,9 @@ ghcr.io/brenoqn/memoriar-api
 - `memoriar-web`: frontend Angular estático servido por Nginx;
 - `memoriar-api`: API Node/Express sem porta publicada no host;
 - `@memoriar/shared`: pacote local compilado antes dos dois consumidores;
-- Supabase: serviço de dados externo, acessado pela API.
+- PostgreSQL: container compartilhado `bqtech-postgres` (PostgreSQL 17) na rede `bqtech-data`,
+  banco `memoriar_db`, acessado somente pela API;
+- `memoriar-migrate`: execução única da imagem da API que aplica as migrations a cada release.
 
 Em produção, `https://memoriar.bqtech.com.br` chega ao frontend pelo proxy reverso. O Nginx
 encaminha `/api` e `/health` para a API na rede Docker interna.
@@ -26,20 +28,24 @@ A API usa estas variáveis:
 
 - `PORT`;
 - `FRONTEND_ORIGIN`;
-- `USE_MOCKS`;
-- `SUPABASE_URL`;
-- `SUPABASE_ANON_KEY`.
+- `DATABASE_URL` (de `.secrets/database.env`, apontando para `bqtech-postgres:5432/memoriar_db`);
+- `JWT_SECRET` (mínimo de 32 caracteres; assina os tokens administrativos);
+- opcionais: `DATABASE_POOL_MAX` (padrão 5) e `JWT_EXPIRES_IN_MINUTES` (padrão 480).
 
-O nome histórico `SUPABASE_ANON_KEY` é parte do contrato atual, mesmo quando o valor configurado
-é uma publishable key moderna. Não o renomeie sem uma migração explícita. Valores reais devem
-existir somente no runtime privado; não use chaves `service_role` nem copie secrets para Git ou
-GitHub Actions.
+Sem `DATABASE_URL` ou `JWT_SECRET` válidos, a API não inicia e informa qual variável falta.
+Valores reais existem somente no runtime privado; nunca os copie para Git ou GitHub Actions.
+
+A autenticação administrativa é própria: usuários em `app_users` com senha em hash scrypt e papéis
+`admin`, `editor` e `viewer`. Hoje apenas `admin` e `editor` acessam a área administrativa. O
+primeiro usuário é criado com `node dist/db/cli.js create-admin` (ver
+[MIGRACAO-POSTGRES.md](MIGRACAO-POSTGRES.md)).
 
 ## CI e entrega
 
 Pull requests para `main` validam shared, backend e frontend. Pushes para `main` publicam as duas
 imagens com tags `latest` e `sha-<commit-curto>`. O GitHub Actions não acessa o homelab e não
-recebe credenciais do servidor ou do Supabase.
+recebe credenciais do servidor ou do banco. Os testes do backend usam um PostgreSQL 17 descartável
+criado como service container do próprio workflow.
 
 O servidor consulta o GHCR por timer e trata web e API como um release conjunto. O procedimento
 reportado preserva as duas imagens anteriores, executa health checks e restaura o par anterior
@@ -55,16 +61,18 @@ deste repositório.
 
 Nomes de bundles são gerados pelo build e não podem ser fixados em scripts operacionais.
 
-## Divergência conhecida de rede
+## Rede
 
-O `compose.production.yaml` versionado conecta a API somente a uma rede marcada como
-`internal: true`. Foi reportada latência elevada nas chamadas ao Supabase, enquanto `/health`
-responde normalmente. Essa topologia pode impedir ou degradar o egress necessário para o serviço
-externo. Além disso, `SupabasePublicSearchRepository` converte erros do Supabase em lista vazia,
-o que pode ocultar a falha.
+A API participa da rede interna `memoriar` (com o frontend) e da rede externa `bqtech-data` (com o
+`bqtech-postgres`). Ela não precisa de saída para a internet. A pendência anterior de egress para o
+Supabase deixou de existir com a migração para o banco local.
 
-Essa pendência está documentada, mas não deve ser corrigida incidentalmente. Qualquer mudança de
-rede ou de tratamento de erro exige uma tarefa dedicada, testes e validação no ambiente privado.
+## Migrations
+
+- Os arquivos ficam em `backend/db/migrations/` (`NNNN_descricao.sql`) e são aplicados em ordem,
+  cada um em uma transação, registrados em `schema_migrations`.
+- Migrations já publicadas não devem ser editadas; correções entram como um novo arquivo.
+- O seed demonstrativo (`backend/db/seeds/demo_seed.sql`) nunca é aplicado automaticamente.
 
 ## Fontes de verdade e limites
 
@@ -86,7 +94,7 @@ npm --prefix shared run build
 
 npm --prefix backend ci
 npm --prefix backend run typecheck
-npm --prefix backend test
+npm --prefix backend test   # precisa do Postgres local (ver README) ou de TEST_DATABASE_URL
 npm --prefix backend run build
 
 npm --prefix frontend ci
@@ -95,5 +103,4 @@ npm --prefix frontend run build
 ```
 
 Após a atualização, valide frontend, fallback de rota, `/health`, uma chamada real de `/api` e
-logs dos dois containers. Um health check saudável não confirma, sozinho, conectividade com o
-Supabase.
+logs dos containers. O `/health` responde 200 somente quando a API consegue consultar o banco.
