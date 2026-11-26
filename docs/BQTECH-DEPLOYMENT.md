@@ -45,7 +45,8 @@ primeiro usuário é criado com `node dist/db/cli.js create-admin` (ver
 Pull requests para `main` validam shared, backend e frontend. Pushes para `main` publicam as duas
 imagens com tags `latest` e `sha-<commit-curto>`. O GitHub Actions não acessa o homelab e não
 recebe credenciais do servidor ou do banco. Os testes do backend usam um PostgreSQL 17 descartável
-criado como service container do próprio workflow.
+criado como service container do próprio workflow. Pull requests também constroem as duas imagens,
+sem publicá-las, para que uma falha nos Dockerfiles apareça antes do merge.
 
 O servidor consulta o GHCR por timer e trata web e API como um release conjunto. O procedimento
 reportado preserva as duas imagens anteriores, executa health checks e restaura o par anterior
